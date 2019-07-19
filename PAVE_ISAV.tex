@@ -95,7 +95,7 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
-  Science!
+  In this work we offer an approachable platform for visualization tasks by employing a neural network for real time rendering and accurate light transport simulation within the framework of Python made compatible for distributed systems and high performance computing (HPC). The provided model is a coalescence of VTK-m, a visualization tookit fit for massively threaded architectures, PyTorch, an  increasingly popular language within machine learning due to robust libraries for neural networks, and Adios, an adaptable unified IO framework for data managment at scale. The resulting work accomplishes this combination by utilizing VTK-m to construct a path trace renderer able to fluidly and efficiently communicate to a conditional Generative Advisarial Network (cGAN) by means of Adios during training cullminating in a generative model which serves as a filter for rendered images and visual simulations capable of approximating indirect illumination and soft shadows at real-time rates while maintaining quality comparable to offline approaches.
 \end{abstract}
 
 %%
@@ -103,17 +103,59 @@
 %% Please copy and paste the code instead of the example below.
 %%
 
-\begin{CCSXML}
+ \begin{CCSXML}
 <ccs2012>
+<concept>
+<concept_id>10003752.10003753.10003761.10003762</concept_id>
+<concept_desc>Theory of computation~Parallel computing models</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003752.10003753.10003761.10003763</concept_id>
+<concept_desc>Theory of computation~Distributed computing models</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003752.10010070.10010071.10010085</concept_id>
+<concept_desc>Theory of computation~Structured prediction</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003752.10010070.10010071.10010261.10010276</concept_id>
+<concept_desc>Theory of computation~Adversarial learning</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003752.10010070.10010111.10011710</concept_id>
+<concept_desc>Theory of computation~Data structures and algorithms for data management</concept_desc>
+<concept_significance>500</concept_significance>
+</concept>
+<concept>
+<concept_id>10003752.10003753.10003757</concept_id>
+<concept_desc>Theory of computation~Probabilistic computation</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
+<concept>
+<concept_id>10003752.10010070.10010111.10010113</concept_id>
+<concept_desc>Theory of computation~Database query languages (principles)</concept_desc>
+<concept_significance>300</concept_significance>
+</concept>
 <concept>
 <concept_id>10010405.10010432.10010439.10010440</concept_id>
 <concept_desc>Applied computing~Computer-aided design</concept_desc>
-<concept_significance>300</concept_significance>
+<concept_significance>500</concept_significance>
 </concept>
 </ccs2012>
 \end{CCSXML}
 
-\ccsdesc[300]{Applied computing~Computer-aided design}
+\ccsdesc[500]{Theory of computation~Parallel computing models}
+\ccsdesc[500]{Theory of computation~Distributed computing models}
+\ccsdesc[500]{Theory of computation~Structured prediction}
+\ccsdesc[500]{Theory of computation~Adversarial learning}
+\ccsdesc[500]{Theory of computation~Data structures and algorithms for data management}
+\ccsdesc[300]{Theory of computation~Probabilistic computation}
+\ccsdesc[300]{Theory of computation~Database query languages (principles)}
+\ccsdesc[500]{Applied computing~Computer-aided design}
 
 %%
 %% Keywords. The author(s) should pick words that accurately describe

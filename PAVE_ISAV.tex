@@ -193,7 +193,7 @@ Enabling Hardware: By constructing an architecture allowing for Python to interf
 Analysis: feature detection, statistical methods, temporal methods, geometric and topological methods 
 Visualization: information visualization, scientific visualization, time-varying methods
   \item Case Studies and Data Sources
-In situ methods/systems applied to data from simulations and/or experiments/observations
+In situ methods/systems applied to data from simulations and/or experiments / observations
   \item Simulation and Workflows:
 Integration:data modeling, software-engineering, 
 Workflows for supporting complex in situ processing pipelines
@@ -208,12 +208,30 @@ Reproducibility, provenance and metadata
 \section{Related Work}
 
 Tomas and Forbes Deep Illumination: \cite{deepillum}
+
 VTKm \cite{vtkm}
 
+Reinforced learning for light transport simulation \cite{dahmTransport}
 
-\section{Motivation and Contribution}
+\section{Technique Overview}
 
-\section{Implementation Design}
+Utilization of PAVE consists of three consecutive phases: rendering phase of conditional training images, training phase of the generative neural network, and execution phase of the trained network. Three core components, VTK-m, PyTorch, and Adios2 fufill a unique functional requirement during each stage. In this section we describe the independent design and global role of each system plays.
+
+\subsection{System Overview}
+ 
+To achieve our goal of a conditional generative neural network capable of rendering geometric dependent object path simulations we begin by rendering informative conditional image buffers along with ground truth scene renderings. For this purpose the VTK-m was chosen due to its scalability and robust capability for HPC visualization tasks. Provided the training set of conditional and ground truth images two neural networks, one convolutional and one generative, play a zero-sum game common to training GANs. To segue data managment of training images the path tracer saves the training set in a distributed setting with the use of Adios2. During training PyTorch is then able to retrieve needed image data through the use of the adaptable IO provided by Adios's Python high-level APIs.
+
+\subsection{Path Tracer Design}
+
+\subsection{Neural Network Design}
+
+\subsubsection{Descriminator Network}
+
+For classification between artificial and ground truth image renderings a patchGAN is used as descriminator network which is a deep convolutional network with the added advantage of providing a patch-wise probability of an image in question as being real or fake. The benefit of a patch-wise probability allows for higher regional accuracy within an image as well as applicable for image-to-image tasks as introduced by Isola et. al. \cite{isolaPatch}.
+
+\subsubsection{Generator Network}
+
+The generative network used is a deep convolutional network consisting of an encoder and decoder with skip connections concatonating equal depth layers of the encoding and decoding stages. Due to the illustrative `shape' of this design the network is denoted a U-Net as introduced by Ronneberger et. al. for medical segmentation \cite{ronnebergerUnet}. The motivation for utilizing a U-Net is due to success of the skip connections linking the decoded convolutional process to the encoded deconvolutional in capturing geometric and spatial attributes.
 
 \section{Experiments}
 

@@ -207,6 +207,12 @@ Reproducibility, provenance and metadata
 
 \section{Related Work}
 
+Real time true to life quality rend3erings of light transport remains an active area of research with a number of various approaches such as precomputed radiance transfer, \cite{sloanPrecompRad}
+
+GAN \cite{goodfellowGAN}
+
+cGAN \cite{mirzacGAN}
+
 Tomas and Forbes Deep Illumination: \cite{deepillum}
 
 VTKm \cite{vtkm}
@@ -215,7 +221,7 @@ Reinforced learning for light transport simulation \cite{dahmTransport}
 
 \section{Technique Overview}
 
-Utilization of PAVE consists of three consecutive phases: rendering phase of conditional training images, training phase of the generative neural network, and execution phase of the trained network. Three core components, VTK-m, PyTorch, and Adios2 fufill a unique functional requirement during each stage. In this section we describe the independent design and global role of each system plays.
+Utilization of PAVE consists of three consecutive phases: rendering phase of conditional training images, training phase of the generative neural network, and execution phase of the trained network. Three core components, VTK-m, PyTorch, and Adios2 fufill a unique functional requirement during each stage. In this section we describe the independent design and global role each system plays.
 
 \subsection{System Overview}
  

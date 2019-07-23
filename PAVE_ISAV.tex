@@ -207,7 +207,7 @@ Reproducibility, provenance and metadata
 
 \section{Related Work}
 
-Real time true to life quality rend3erings of light transport remains an active area of research with a number of various approaches such as precomputed radiance transfer, \cite{sloanPrecompRad}
+Real time true to life quality renerings of light transport remains an active area of research with a number of various approaches. To preserve real-time rates precomputed radiance transfer of light transport has been stored in a form of look up tables as spherical functions within a fixed scene geometry which are then adjusted for varied light and camera perspective through projections within a basis of spherical harmonics \cite{sloanPrecompRad}. Similarly, Light Propagation Volumes have been used to iteratively propagate light between consecutive grid positions to emulate single-bounce indirect illumination \cite{kaplanyanCasac}. More recently deep neural  networks have been employed as a learned look up table for real-time rates with offline quality. With the use of convolutional neural networks Deep Shading is able to translate screen space buffers to into desired screen space effects such as indirect light, depth or motion blur. Similar to the methodology implemented in this work, Deep Illumination uses a conditional advisarial network (cGAN) to train a generative network with screen space buffers allowing for a trained network able to produce accurate global illumination with real-time rates at offline quality through a ``one network for one scene'' setting.
 
 GAN \cite{goodfellowGAN}
 

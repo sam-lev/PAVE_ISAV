@@ -243,6 +243,7 @@ As input during training the descriminator network is given the set of condition
 \begin{figure}[h]
 \caption{\textmd{Global illumination conditional image buffers. {\bf Top:} Albedo, left. Depth, right. {\bf Bottom:} Normals, left. Direct lighting, right.}}
 \includegraphics[width=0.45\textwidth]{demo.png}
+\label{Gbuf}
 \end{figure}
 
 \subsubsection{Generator Network}
@@ -251,7 +252,9 @@ The generative network used is a deep convolutional network consisting of an enc
 
 \section{Cornell Box Experiment}
 
-To evaluate the quality of in situ deep learning aided visualizations train the cGAN networks on rendered images of a Cornell box, a commonly used 3D modeling framework for quality assesment. We train the model using renderings of the Cornell box with high light sample count and depth computation per ray for various camera angle views into the box along with the associated image buffers for a given camera orientation. We then assess the quality of the mdoels final generated renderings looking at the accuracy of global illumination. We then also demonstrate the performance of the models ability to render global illuminatio when given image buffers for a novel scene not used for training similar in content but not exact. The scene used for training is comprised of the classic set up with one overhead light source in the center of a white ceiling, a white back wall and a white floor. The remaining walls are then colored red on the left and green on the right in order to afford different colored light transport amd demonstrate diffuse interreflection. The contents of the Cornell box are three cuboids of various shapes and sizes to provide diverse shading and diffused lighting. 
+To evaluate the quality of in situ deep learning aided visualizations train the cGAN networks on rendered images of a Cornell box, a commonly used 3D modeling framework for quality assesment. We train the model using renderings of the Cornell box with high light sample count and depth computation per ray for various camera angle perspectives into the box along with the associated image geomretry buffers for a given camera orientation. We then assess the quality of the mdoels final generated renderings looking at the accuracy of global illumination. We then also demonstrate the performance of the models ability to render global illuminatio when given image buffers for a novel scene not used for training similar in content but not exact. The scene used for training is comprised of the classic set up with one overhead light source in the center of a white ceiling, a white back wall and a white floor. The remaining walls are then colored red on the left and green on the right in order to afford different colored light transport amd demonstrate diffuse interreflection. The contents of the Cornell box are three cuboids of various shapes and sizes to provide diverse shading and diffused lighting. 
+
+The conditional differed shading geometry buffers used are direct lighting, normal planes, depth and albedo as shown in figure \ref{Gbuf}. 
 
 \section{Results}
 \includegraphics[scale=.5]{science.jpg}

@@ -258,13 +258,19 @@ For our PyTorch in situ proposal our means for generating path traced images and
 
 \subsubsection{PyTorch with Adios2 IO}
 
-For training the cGAN on pre-generated path traced images and conditional buffers PyTorch employs Adios2. To illustrate, given a conditional image set of interest and path to saved adios .bp files, the below will return a the images names and a dictionary associating name to the accompanied RGBA image.
+For training the cGAN our solution provides the AdiosDataLoader to be used by PyTorch during training.
 
-\inputminted{python}{pytorchAdiosRead.py}
+\inputminted{python}{adiosdataloader.py}
 
-With this above implementation it is then possible to fomat a PyTorch DataLoader that splits the image data set into 60\% training images, 20\% validation images and 20\% testing images to be used in the customary manner for training neural networks.
+ The {\it AdiosDataLoader} employs Adios2 to retrieve pre-generated path traced images and conditional buffers to be instantiated as a PyTorch {\it DataLoader}. Given a conditional image set of interest and path to the saved Adios .bp files a dictionary associating name to the accompanied RGBA image is retrieved with {\it read\_adios\_bp()} and is subsequently partioned into training, testing and validation subsets with the {\it get\_split()} method into 60\% training images, 20\% validation images and 20\% testing images.
+ 
+%\inputminted{python}{pytorchAdiosRead.py}
+%\inputminted{python}{trainingSplit.py}
 
-\inputminted{python}{trainingSplit.py}
+Using the {\it AdiosDataLoader} we can then train our neural networks implemented in PyTorch in the canonical manner
+
+\inputminted{python}{pytorchDataLoader.py}
+
 
 \section{Cornell Box Experiment}
 

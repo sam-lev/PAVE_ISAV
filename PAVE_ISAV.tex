@@ -182,6 +182,7 @@
 %% information and builds the first part of the formatted document.
 \maketitle
 \section{Applicable ``Area of Interests'' Targets}
+{\footnotesize
 \begin{enumerate}
     \item In situ data management and infrastructures
 Current Systems: production quality, research prototypes , Opportunities ,Gaps
@@ -206,6 +207,7 @@ Workflows for supporting complex in situ processing pipelines
 Reproducibility, provenance and metadata
 
 \end{enumerate}
+}
 
 \section{Introduction}
 
@@ -252,7 +254,7 @@ The generative network used is a deep convolutional network consisting of an enc
 
 \subsection{Core Design Pattern}
 
-For our PyTorch in situ proposal our means for generating path traced images and geometry buffters focus on VTK-m and are succesfuly incorporated into PyTorch with Adios2. Our main focus is Adios2's IO API from within C++, utilizing write capabilities, and Python oriented towards data retreival. 
+For our PyTorch in situ proposal current systems we rely on are VTK-m for generating path traced images and geometry buffters focus and Adios2 for data managment. Our main focus is Adios2's IO API from within C++, utilizing write capabilities, and Python API oriented towards data retreival. 
 
 \subsubsection{VTK-m Data Generation and Adios2 Write}
 
@@ -277,7 +279,7 @@ Using the {\it AdiosDataLoader} we can then train our neural networks implemente
 To evaluate the quality of in situ deep learning aided visualizations train the cGAN networks on rendered images of a Cornell box, a commonly used 3D modeling framework for quality assesment. We train the model using renderings of the Cornell box with high light sample count and depth computation per ray for various camera angle perspectives into the box along with the associated image geomretry buffers for a given camera orientation. We then assess the quality of the mdoels final generated renderings looking at the accuracy of global illumination. We then also demonstrate the performance of the models ability to render global illuminatio when given image buffers for a novel scene not used for training similar in content but not exact. The scene used for training is comprised of the classic set up with one overhead light source in the center of a white ceiling, a white back wall and a white floor. The remaining walls are then colored red on the left and green on the right in order to afford different colored light transport amd demonstrate diffuse interreflection. The contents of the Cornell box are three cuboids of various shapes and sizes to provide diverse shading and diffused lighting. 
 
 \begin{figure}[h]
-\includegraphics[width=0.40\textwidth]{sc-1080-d-45.png}
+\includegraphics[width=0.3\textwidth]{sc-1080-d-45.png}
 \end{figure}
 
 The conditional differed shading geometry buffers used are direct lighting, normal planes, depth and albedo. 

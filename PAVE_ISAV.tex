@@ -1,6 +1,11 @@
-
+%
+% __NOTE: (!) 
+%      to build pdf with pdflatex you 
+%      must do pdflatex --shell-escape PAVE_ISAV.tex 
+%      because of minted import for code examples
+%__
 \documentclass[sigconf,authordraft]{acmart}
-
+\usepackage{minted}
 %%
 %% \BibTeX command to typeset BibTeX logo in the docs
 \AtBeginDocument{%
@@ -244,6 +249,22 @@ As input during training the descriminator network is given the set of condition
 \subsubsection{Generator Network}
 
 The generative network used is a deep convolutional network consisting of an encoder and decoder with skip connections concatonating equal depth layers of the encoding and decoding stages. Due to the illustrative `shape' of this design the network is denoted a U-Net as introduced by Ronneberger et. al. for medical segmentation \cite{ronnebergerUnet}. The motivation for utilizing a U-Net is due to success of the skip connections linking the decoded convolutional process to the encoded deconvolutional in capturing geometric and spatial attributes. The generator retreives as input through Adios global illumination buffers saved to file once rendered with VTK-m. 
+
+\subsection{Core Design Pattern}
+
+For our PyTorch in situ proposal our means for generating path traced images and geometry buffters focus on VTK-m and are succesfuly incorporated into PyTorch with Adios2. Our main focus is Adios2's IO API from within C++, utilizing write capabilities, and Python oriented towards data retreival. 
+
+\subsubsection{VTK-m Data Generation and Adios2 Write}
+
+\subsubsection{PyTorch with Adios2 IO}
+
+For training the cGAN on pre-generated path traced images and conditional buffers PyTorch employs Adios2. To illustrate, given a conditional image set of interest and path to saved adios .bp files, the below will return a the images names and a dictionary associating name to the accompanied RGBA image.
+
+\inputminted{python}{pytorchAdiosRead.py}
+
+With this above implementation it is then possible to fomat a PyTorch DataLoader that splits the image data set into 60\% training images, 20\% validation images and 20\% testing images to be used in the customary manner for training neural networks.
+
+\inputminted{python}{trainingSplit.py}
 
 \section{Cornell Box Experiment}
 

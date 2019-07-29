@@ -171,8 +171,8 @@
 %% information and the body of the document, and typically spans the
 %% page.
 \begin{teaserfigure}
-  \includegraphics[width=\textwidth]{buff_results.png}
-  \caption{Rendered Conditional Geometry Buffers ({\bf left}) and artificial rendering with conditional generative advisarial neural network ({\bf right})}
+  \includegraphics[width=\textwidth]{buffers_results.png}
+  \caption{\textmd{Rendered Conditional Geometry Buffers ({\bf left set}) and artificial rendering with conditional generative advisarial neural network ({\bf right couple}) comparing ground truth path traced rendering ({\bf left}) with image generated ({\bf right}).}}
   \Description{Conditional Buffers and path traced rendered with VTKm to be used for training a PyTorch conditional generative adversarial network.}
   \label{fig:teaser}
 \end{teaserfigure}
@@ -258,16 +258,16 @@ For our PyTorch in situ proposal current systems we rely on are VTK-m for render
 
 \subsubsection{VTK-m Data Generation and Adios2 Write}
 
-Path traced images are maintaned within C++11 as VTK-m arrays which can be passed by reference directly to PyTorch using Adios2 APIs or written to Adios2 bp file and later retreived during the dataloading step of training the neural network. 
+Path traced images are maintaned within C++11 as VTK-m arrays which can be passed by reference directly to PyTorch using Adios2 APIs or written to Adios2 bp file and later retreived during the dataloading step when training or utilizing the neural network. 
 
 \subsubsection{PyTorch with Adios2 IO}
 
-For training the cGAN our solution provides the AdiosDataLoader to be used by PyTorch during training. The {\it AdiosDataLoader} employs Adios2 to either retrieve from file, or have passed by reference, vector representations of path traced images and conditional buffers. In this manner the training or test sets needed by PyTorch and created by VTK-m are made able to inheret from PyTorch's abstract indexing class {\it torch.utils.data.Dataset}. If retreiving VTK-m's renderings PyTorch will compile Adios2 attrubutes from file affording a  to the saved Adios .bp files a dictionary associating name to the accompanied RGBA image is retrieved with {\it read\_adios\_bp()} and is subsequently partioned into training, testing and validation subsets with the {\it get\_split()} method into 60\% training images, 20\% validation images and 20\% testing images.
+For training, our solution used by the cGAN is ``{\it AdiosDataLoader}'', a data class inhereting from the abstract indexing c;ass PyTorch {\it torch.utils.data.Dataset}. The {\it AdiosDataLoader} employs Adios2 to either retrieve from file or have passed by reference vector representations of path traced images and conditional buffers. Within VTK-m during generation these vectors represented as VTK-m vectors and within PyTorch as numpy arrays. In this manner the training or test sets needed by PyTorch and created by VTK-m are available to PyTorch in situ or with reference to written memory. If retreiving VTK-m's renderings PyTorch will compile Adios2 attrubutes from file as tabled by Adios2 into .bp files. Datasets can be retrieved with {\it read\_adios\_bp()} and subsequently partioned into training, testing and validation subsets with our {\it get\_split()} method into 60\% training images, 20\% validation images and 20\% testing images.
  
 %\inputminted{python}{pytorchAdiosRead.py}
 %\inputminted{python}{trainingSplit.py}
 
-Using the {\it AdiosDataLoader} we can then train our neural networks implemented in PyTorch in the canonical manner
+which then used in {\it AdiosDataLoader} to instantiate a {\it torch.utils.data.DataLoader} thereby providing a data sampler to our VTK-m renderings afforing single or multi-process iterators over the dataset, allowing us to train our neural networks in the canonical manner
 
 \inputminted{python}{pytorchDataLoader.py}
 

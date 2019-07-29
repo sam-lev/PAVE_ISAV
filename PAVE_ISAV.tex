@@ -174,7 +174,7 @@
   \includegraphics[width=\textwidth]{buffers_results.png}
   \caption{\textmd{Rendered Conditional Geometry Buffers ({\bf left set}) and artificial rendering with conditional generative advisarial neural network ({\bf right couple}) comparing ground truth path traced rendering ({\bf left}) with image generated ({\bf right}).}}
   \Description{Conditional Buffers and path traced rendered with VTKm to be used for training a PyTorch conditional generative adversarial network.}
-  \label{fig:teaser}
+  \label{teaser}
 \end{teaserfigure}
 
 %%
@@ -216,16 +216,6 @@ Reproducibility, provenance and metadata
 
 Real time true to life quality renerings of light transport remains an active area of research with a number of various approaches. To preserve real-time rates, previous works have stored precomputed radiance transfers for light transport as spherical functions within a fixed scene geometry which are then adjusted for varied light and camera perspective through projections within a basis of spherical harmonics \cite{sloanPrecompRad}. Similarly, Light Propagation Volumes have been used to iteratively propagate light between consecutive grid positions to emulate single-bounce indirect illumination \cite{kaplanyanCasac}. More recently, deep neural  networks have been employed as a learned look up table for real-time rates with offline quality. With the use of convolutional neural networks Deep Shading is able to translate screen space buffers to into desired screen space effects such as indirect light, depth or motion blur. Similar to the methodology implemented in this work, Deep Illumination uses a conditional advisarial network (cGAN) to train a generative network with screen space buffers allowing for a trained network able to produce accurate global illumination with real-time rates at offline quality through a ``one network for one scene'' setting  \cite{deepillum}.
 
-GAN \cite{goodfellowGAN}
-
-cGAN \cite{mirzacGAN}
-
-Tomas and Forbes Deep Illumination:
-
-VTKm \cite{vtkm}
-
-Reinforced learning for light transport simulation \cite{dahmTransport}
-
 \section{Technique Overview}
 
 Utilization of PAVE consists of three consecutive phases: rendering phase of conditional training images, training phase of the generative neural network, and execution phase of the trained network. Three core components, VTK-m, PyTorch, and Adios2 fufill a unique functional requirement during each stage. In this section we describe the independent design and global role each system plays.
@@ -262,36 +252,35 @@ Path traced images are maintaned within C++11 as VTK-m arrays which can be passe
 
 \subsubsection{PyTorch with Adios2 IO}
 
-For training, our solution used by the cGAN is ``{\it AdiosDataLoader}'', a data class inhereting from the abstract indexing c;ass PyTorch {\it torch.utils.data.Dataset}. The {\it AdiosDataLoader} employs Adios2 to either retrieve from file or have passed by reference vector representations of path traced images and conditional buffers. Within VTK-m during generation these vectors represented as VTK-m vectors and within PyTorch as numpy arrays. In this manner the training or test sets needed by PyTorch and created by VTK-m are available to PyTorch in situ or with reference to written memory. If retreiving VTK-m's renderings PyTorch will compile Adios2 attrubutes from file as tabled by Adios2 into .bp files. Datasets can be retrieved with {\it read\_adios\_bp()} and subsequently partioned into training, testing and validation subsets with our {\it get\_split()} method into 60\% training images, 20\% validation images and 20\% testing images.
- 
+For training, our solution used by the cGAN is ``{\it AdiosDataLoader}'', a data class inhereting from the abstract indexing class PyTorch {\it torch.utils.data.Dataset}. The {\it AdiosDataLoader} employs Adios2 to either retrieve from file or have passed by reference vector representations of path traced images and conditional buffers. Within VTK-m during generation these vectors represented as VTK-m vectors and within PyTorch as numpy arrays. In this manner the training or test sets needed by PyTorch and created by VTK-m are available to PyTorch in situ or with reference to written memory. If retreiving VTK-m's renderings PyTorch will compile Adios2 attrubutes from file as tabled by Adios2 into .bp files. Datasets can be retrieved with {\it read\_adios\_bp()} and subsequently partioned into training, testing and validation subsets with our {\it get\_split()} method into 60\% training images, 20\% validation images and 20\% testing images. The split datasets are then used in {\it AdiosDataLoader} to instantiate the {\it torch.utils.data.DataLoader} thereby providing a data sampler to our VTK-m renderings afforing single or multi-process iterators over the dataset, allowing us to train our neural networks in the canonical manner.
+% other example scripts
 %\inputminted{python}{pytorchAdiosRead.py}
 %\inputminted{python}{trainingSplit.py}
-
-which then used in {\it AdiosDataLoader} to instantiate a {\it torch.utils.data.DataLoader} thereby providing a data sampler to our VTK-m renderings afforing single or multi-process iterators over the dataset, allowing us to train our neural networks in the canonical manner
-
 \inputminted{python}{pytorchDataLoader.py}
-
 
 \section{Cornell Box Experiment}
 
 To evaluate the quality of in situ deep learning aided visualizations train the cGAN networks on rendered images of a Cornell box, a commonly used 3D modeling framework for quality assesment. We train the model using renderings of the Cornell box with high light sample count and depth computation per ray for various camera angle perspectives into the box along with the associated image geomretry buffers for a given camera orientation. We then assess the quality of the mdoels final generated renderings looking at the accuracy of global illumination. We then also demonstrate the performance of the models ability to render global illuminatio when given image buffers for a novel scene not used for training similar in content but not exact. The scene used for training is comprised of the classic set up with one overhead light source in the center of a white ceiling, a white back wall and a white floor. The remaining walls are then colored red on the left and green on the right in order to afford different colored light transport amd demonstrate diffuse interreflection. The contents of the Cornell box are three cuboids of various shapes and sizes to provide diverse shading and diffused lighting. 
 
+%\vspace{-1.5em}
 \begin{figure}[h]
-\includegraphics[width=0.3\textwidth]{sc-1080-d-45.png}
+\includegraphics[width=0.25\textwidth]{sc-1080-d-45.png}
 \end{figure}
+%\vspace{-1em}
 
-The conditional differed shading geometry buffers used are direct lighting, normal planes, depth and albedo. 
-
+The conditional differed shading geometry buffers used are direct lighting, normal planes, depth and albedo as shown in figure \ref{teaser}.
+\iffalse
 \begin{figure}[h]
 \caption{\textmd{Global illumination conditional image buffers. {\bf Top:} Albedo, left. Depth, right. {\bf Bottom:} Normals, left. Direct lighting, right.}}
 \includegraphics[width=0.40\textwidth]{demo.png}
 \label{Gbuf}
 \end{figure}
-
+\fi
 The geometry buffers serve as joint variables for the conditional probability distribution which the global illumination path traced images are considered to exist. The conditional arguments in this experiment then aid the cGAN in learning behaviour of light paths given the geometry of a scene in question. 
 
 \section{Results}
-\includegraphics[scale=.5]{science.jpg}
+\subsection{Cornell Box Experiment Results}
+\subsection{Solution Design Assessment}
 \section{Conclusions}
 
 
@@ -317,9 +306,8 @@ document.
 
 %%
 %% If your work has an appendix, this is the place to put it.
-\appendix
-
-\section{Appendix}
+%\appendix
+%\section{Appendix}
 
 
 

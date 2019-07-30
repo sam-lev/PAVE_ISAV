@@ -234,7 +234,7 @@ The cGAN used closely follows that introduced by Thomas and Forbes with Deep Ill
 
 \subsubsection{Generator Network}
 
-The generative network used is a deep convolutional network consisting of an encoder and decoder with skip connections-concatenations of equal depth layers within the encoding and decoding stages. Due to the illustrative `shape' of this design the network is denoted a U-Net as introduced by Ronneberger et. al. for medical segmentation \cite{ronnebergerUnet}. The motivation for utilising a U-Net is due to success of the skip connections in capturing geometric and spatial attributes by linking the decoded convolutional process to the encoded upconvolutional. The mapping of contracting feature segmentation onto expanding upsampling within the network allows us to also exploit nearness to object geometry within the constructed and target image through Euclidean distance. As a result, performance in terms of required training time, quality of preserved structure, and accuracy maintaining light information of generated images drastically improves with the addition of an L1 loss to the classic binary cross entropy common to training adversarial networks when updating the discriminator and generator  \cite{isolaL1}\cite{goodfellowGAN}.
+The generative network used is a deep convolutional network consisting of an encoder and decoder with skip connections-concatenations of equal depth layers within the encoding and decoding stages. Due to the illustrative `shape' of this design the network is denoted a U-Net as introduced by Ronneberger et. al. for medical segmentation \cite{ronnebergerUnet}. The motivation for utilising a U-Net is due to success of the skip connections in capturing geometric and spatial attributes by linking the decoded convolutional process to the encoded upconvolutional. The mapping of contracting feature segmentation onto expanding upsampling within the network allows us to also exploit nearness to object geometry within the constructed and target image through Euclidean distance. As a result, performance in terms of required training time, quality of preserved structure, and accuracy maintaining light information of generated images drastically improves with the addition of an L1 loss to the classic binary cross entropy common to training adversarial networks when updating the discriminator and generator  \cite{isolaL1}\cite{goodfellowGAN}. 
 
 \subsubsection{Discriminator Network}
 
@@ -300,6 +300,7 @@ To render \_\_\_ 256x256 images with VTK-m on 2 \_\_\_\_ GPUs required \_\_\_ ho
 
 \section{Conclusions}
 
+Our work offers a distributable and scalable implementation and framework to allow researchers and practitioners to easily integrate state of the art deep learning tools afforded by the approachable PyTorch and robust visualisation resource VTK-m for in situ graphics rendering or scientific simulation for HPC systems. With the presented example application utilising cGANs for generative visualisation also offers the prospect of quickly and accurately visualise conditionally dependent data such as light path global illumination's dependence on scene geometry. Subsequently we here then also offer a framework for visualisation within C++ with the use of VTK-m as well as Python in tandem or independently. 
 
 
 %%

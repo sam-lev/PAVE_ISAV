@@ -4,7 +4,7 @@
 %      must do pdflatex --shell-escape PAVE_ISAV.tex 
 %      because of minted import for code examples
 %__
-\documentclass[sigconf]{acmart}%,authordraft
+\documentclass[sigconf,authordraft]{acmart}%
 \usepackage{minted}
 %%
 %% \BibTeX command to typeset BibTeX logo in the docs
@@ -252,7 +252,8 @@ Path traced images are maintained within C++11 as VTK-m arrays which can be pass
 
 \subsubsection{PyTorch Design}
 
-For training, our solution used by the cGAN is ``{\it AdiosDataLoader}'', a data class inheriting from the abstract indexing class PyTorch {\it torch.utils.data.Dataset}. The {\it AdiosDataLoader} employs Adios2 to either retrieve from file or have passed by reference vector representations of path traced images and conditional buffers. Within VTK-m during generation these vectors represented as VTK-m vectors and within PyTorch as numpy arrays. In this manner the training or test sets needed by PyTorch and created by VTK-m are available to PyTorch in situ or with reference to written memory. If retrieving VTK-m's renderings PyTorch will compile Adios2 attributes from file as tabled by Adios2 into .bp files. Datasets can be retrieved with {\it read\_adios\_bp()} and subsequently partitioned into training, testing and validation subsets with our {\it get\_split()} method into 60\% training images, 20\% validation images and 20\% testing images. The split datasets are then used in {\it AdiosDataLoader} to instantiate the {\it torch.utils.data.DataLoader} thereby providing a data sampler to our VTK-m renderings affording single or multi-process iterators over the dataset, allowing us to train our neural networks in the canonical manner.
+For training, our solution used by the cGAN is ``{\it AdiosDataLoader}'', a data class inheriting from the abstract indexing class PyTorch {\it torch.utils.data.Dataset}. The {\it AdiosDataLoader} employs Adios2 to either retrieve from file or have passed by reference vector representations of path traced images and conditional buffers. Within VTK-m during generation these vectors represented as VTK-m vectors and within PyTorch as numpy arrays. In this manner the training or test sets needed by PyTorch and created by VTK-m are available to PyTorch in situ or with reference to written memory. If retrieving VTK-m's renderings PyTorch will compile Adios2 attributes from file as tabled by Adios2 into .bp files. VTK-m generated datasets can be retrieved with {\it read\_adios\_bp()} or passed to a similar {\it get\_adios\_bp()} and subsequently forwarded to our {\it get\_split()}  to partition the dataset into 60\% training, 20\% testing and 20\% validation subsets. The split datasets are then used to construct the {\it AdiosDataLoader} class which inherits from the {\it torch.utils.data.DataLoader} thereby providing a data sampler of our VTK-m renderings with a single-process or multi-process iterator over the dataset affording the tools necessary to train our neural networks in the canonical manner.
+
 % other example scripts
 %\inputminted{python}{pytorchAdiosRead.py}
 %\inputminted{python}{trainingSplit.py}
@@ -262,7 +263,7 @@ For training, our solution used by the cGAN is ``{\it AdiosDataLoader}'', a data
 %\inputminted{python}{adiosdataloader.py}
 \noindent\rule{0.5\textwidth}{1pt}
 
-In the above code sample the {\it AdiosDataLoader} class is used to partition the data set into training, validation and testing as well as offer a distributable data sampler with list-like access with {\it \_\_getitem(index)\_\_} and size functionality.
+In the above code sample the {\it AdiosDataLoader} class is used to partition the data set into training, validation and testing as well as offer a distributable data sampler with an array-like data structure allowing index access to elements and collection size functionality.
 
 \noindent\rule{0.5\textwidth}{1pt}
 \inputminted{python}{adiosdataloader.py}
@@ -270,7 +271,7 @@ In the above code sample the {\it AdiosDataLoader} class is used to partition th
 
 \section{Cornell Box Experiment}
 
-To evaluate the quality of in situ deep learning aided visualisations train the cGAN networks on rendered images of a Cornell box, a commonly used 3D modelling framework for quality assessment. We train the model using renderings of the Cornell box with high light sample count and depth computation per ray for various camera angle perspectives into the box along with the associated image geometry buffers for a given camera orientation. We then assess the quality of the models final generated renderings looking at the accuracy of global illumination. We then also demonstrate the performance of the models ability to render global illumination when given image buffers for a novel scene not used for training similar in content but not exact. The scene used for training is comprised of the classic set up with one overhead light source in the centre of a white ceiling, a white back wall and a white floor. The remaining walls are then colored red on the left and green on the right in order to afford different colored light transport and demonstrate diffuse interreflection. The contents of the Cornell box are three cuboids of various shapes and sizes to provide diverse shading and diffused lighting. 
+To evaluate the quality of in situ deep learning aided visualisations train the cGAN networks on rendered images of a Cornell box, a commonly used 3D modelling framework for quality assessment. We train the model using renderings of the Cornell box with high light sample count and depth computation per ray for various camera angle perspectives into the box along with the associated image geometry buffers for a given camera orientation. We then assess the quality of the models final generated renderings looking at the accuracy of global illumination. We then also demonstrate the performance of the models ability to render global illumination when given image buffers for a novel scene not used for training similar in content but not exact. The scene used for training is comprised of the classic set up with one overhead light source in the center of a white ceiling, a white back wall and a white floor. The remaining walls are then colored red on the left and green on the right in order to afford different colored light transport and demonstrate diffuse interreflection. The contents of the Cornell box are three cuboids of various shapes and sizes to provide diverse shading and diffused lighting. 
 
 %\vspace{-1.5em}
 \begin{figure}[h]

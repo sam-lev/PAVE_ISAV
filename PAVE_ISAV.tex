@@ -244,13 +244,13 @@ The generative network used is a deep convolutional network consisting of an enc
 
 \subsection{Core Design Pattern}
 
-For our PyTorch in situ proposal current systems we rely on are VTK-m for rendering path traced images and conditional geometry buffers focus and employ Adios2 for data management. 
+For our PyTorch in situ proposal the current systems we employ are VTK-m, for rendering path traced images and conditional geometry buffers focus, and Adios2 for data management. We discuss the design pattern for our in situ visualisation task with support from deep learning in the order of operations followed within the pipeline of use. Namely, we present the design pattern for rendering light transport in VTK-m coupled with data transport to PyTorch (\ref{pathtracer}). Subsequently we explain the infrastructure for embedding VTK-m throughput managed by Adios2 within PyTorch and demonstrate through example (\ref{pytorch}) by  instantiating a PyTorch data interface allowing for data parallelization and multi-GPU/distributed training as used within the framework for training our cGAN model. 
 
-\subsubsection{VTK-m Data Generation and Adios2 Data Transport}
+\subsubsection{VTK-m Data Generation and Adios2 Data Transport}\label{pathtracer}
 
 Path traced images are maintained within C++11 as VTK-m arrays which can be passed by reference directly to PyTorch using Adios2 APIs or written to Adios2 .bp file and later retrieved during the data loading step when training or utilising the neural network to generate novel scene renderings from geometry buffers. 
 
-\subsubsection{PyTorch Design}
+\subsubsection{PyTorch Design}\label{pytorch}
 
 For training, our solution used by the cGAN is ``{\it AdiosDataLoader}'', a data class inheriting from the abstract indexing class PyTorch {\it torch.utils.data.Dataset}. The {\it AdiosDataLoader} employs Adios2 to either retrieve from file or have passed by reference vector representations of path traced images and conditional buffers. Within VTK-m during generation these vectors represented as VTK-m vectors and within PyTorch as numpy arrays. In this manner the training or test sets needed by PyTorch and created by VTK-m are available to PyTorch in situ or with reference to written memory. If retrieving VTK-m's renderings PyTorch will compile Adios2 attributes from file as tabled by Adios2 into .bp files. VTK-m generated datasets can be retrieved with {\it read\_adios\_bp()} or passed to a similar {\it get\_adios\_bp()} and subsequently forwarded to our {\it get\_split()}  to partition the dataset into 60\% training, 20\% testing and 20\% validation subsets. The split datasets are then used to construct the {\it AdiosDataLoader} class which inherits from the {\it torch.utils.data.DataLoader} thereby providing a data sampler of our VTK-m renderings with a single-process or multi-process iterator over the dataset affording the tools necessary to train our neural networks in the canonical manner.
 
@@ -294,6 +294,9 @@ The geometry buffers serve as joint variables for the conditional probability di
 The resulting generated images show promising results for deep learning aided in situ scientific visualisation. We observe the network successfully learned to emulate light transport in a realistic fashion with offline performance {\bf EXAMPLE}. What is more, though designed in a ``one network for one scene'' setting, the generative net proved to be adaptive and able to generate accurate renderings for not only unobserved camera orientation renderings during training but also varied scenes of a similar flavor when provided the conditional geometry buffers of the novel scene. 
 
 \subsection{Solution Design Assessment}
+
+To render \_\_\_ 256x256 images with VTK-m on 2 \_\_\_\_ GPUs required \_\_\_ hours. Training the cGAN on this image data set over \_\_\_ epochs on the same machine took \_\_\_ hours. Once trained the run time of applying the generative U-Net provided the conditional buffer set averages \_\_\_ seconds. 
+
 \section{Conclusions}
 
 

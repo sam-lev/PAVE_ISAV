@@ -246,17 +246,27 @@ The generative network used is a deep convolutional network consisting of an enc
 
 For our PyTorch in situ proposal current systems we rely on are VTK-m for rendering path traced images and conditional geometry buffters focus and employ Adios2 for data managment. 
 
-\subsubsection{VTK-m Data Generation and Adios2 Write}
+\subsubsection{VTK-m Data Generation and Adios2 Data Transport}
 
 Path traced images are maintaned within C++11 as VTK-m arrays which can be passed by reference directly to PyTorch using Adios2 APIs or written to Adios2 bp file and later retreived during the dataloading step when training or utilizing the neural network. 
 
-\subsubsection{PyTorch with Adios2 IO}
+\subsubsection{PyTorch Design}
 
 For training, our solution used by the cGAN is ``{\it AdiosDataLoader}'', a data class inhereting from the abstract indexing class PyTorch {\it torch.utils.data.Dataset}. The {\it AdiosDataLoader} employs Adios2 to either retrieve from file or have passed by reference vector representations of path traced images and conditional buffers. Within VTK-m during generation these vectors represented as VTK-m vectors and within PyTorch as numpy arrays. In this manner the training or test sets needed by PyTorch and created by VTK-m are available to PyTorch in situ or with reference to written memory. If retreiving VTK-m's renderings PyTorch will compile Adios2 attrubutes from file as tabled by Adios2 into .bp files. Datasets can be retrieved with {\it read\_adios\_bp()} and subsequently partioned into training, testing and validation subsets with our {\it get\_split()} method into 60\% training images, 20\% validation images and 20\% testing images. The split datasets are then used in {\it AdiosDataLoader} to instantiate the {\it torch.utils.data.DataLoader} thereby providing a data sampler to our VTK-m renderings afforing single or multi-process iterators over the dataset, allowing us to train our neural networks in the canonical manner.
 % other example scripts
 %\inputminted{python}{pytorchAdiosRead.py}
 %\inputminted{python}{trainingSplit.py}
+
+\noindent\rule{0.5\textwidth}{1pt}
 \inputminted{python}{pytorchDataLoader.py}
+%\inputminted{python}{adiosdataloader.py}
+\noindent\rule{0.5\textwidth}{1pt}
+
+In the above code sample the {\it AdiosDataLoader} class is used to partition the data set into training, validation and testing as well as offer a distributable data sampler with list-like access with {\it \_\_getitem(index)\_\_} and size functionality.
+
+\noindent\rule{0.5\textwidth}{1pt}
+\inputminted{python}{adiosdataloader.py}
+\noindent\rule{0.5\textwidth}{1pt}
 
 \section{Cornell Box Experiment}
 
@@ -280,6 +290,8 @@ The geometry buffers serve as joint variables for the conditional probability di
 
 \section{Results}
 \subsection{Cornell Box Experiment Results}
+The resulting generated images show promising results for deep learning aided in situ scientific visualisation. We observe the network successfully learned to emulate light transport in a realistic fashion with offline performance {\bf EXAMPLE}. What is more, though designed in a ``one network for one scene'' setting, the generative net proved to be adaptive and able to generate accurate renderings for not only unobserved camera orientation renderings during training but also varied scenes of a similar flavor when provided the conditional geomerty buffers of the novel scene. 
+
 \subsection{Solution Design Assessment}
 \section{Conclusions}
 

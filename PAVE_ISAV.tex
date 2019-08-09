@@ -5,7 +5,10 @@
 %      because of minted import for code examples
 %__
 \documentclass[sigconf,authordraft]{acmart}%
-\usepackage{minted}
+\usepackage{minted}%for python code
+
+\usepackage{hyperref}
+
 %%
 %% \BibTeX command to typeset BibTeX logo in the docs
 \AtBeginDocument{%
@@ -100,7 +103,7 @@
 %% The abstract is a short summary of the work to be presented in the
 %% article.
 \begin{abstract}
- {\it In situ} deep learning for scientific visualisation has an increasingly broader venue for application as visualisation on large scale systems and machine learning techniques and applications continue to expand. In this work we offer an approachable platform for visualisation tasks by employing a neural network for real time rendering and accurate light transport simulation within the framework of Python, specifically PyTorch, made compatible for distributed systems and high performance computing (HPC). The provided model is a coalescence of VTK-m, a visualisation toolkit fit for massively threaded architectures, PyTorch, an  increasingly popular language within machine learning due to robust libraries for neural networks, and Adios2, an adaptable unified IO framework for data management at scale. The resulting work accomplishes this combination by utilising VTK-m to construct a path trace rendering tool able to fluidly and efficiently communicate to a conditional Generative Adversarial Network (cGAN) by means of Adios2 during training. The resulting generative model serves as a real-time filter for rendering images and visual simulations accurately approximating indirect illumination and soft shadows with quality comparable to offline approaches. 
+ The need for researchers and practitioners to have access to {\it in situ} operations grows within artificial intelligence and scientific simulations or visualisations tasks as implementations become more complex and scaled, widening the gap between computation time and IO throughput. 
 \end{abstract}
 
 %%
@@ -181,36 +184,13 @@
 %% This command processes the author and affiliation and title
 %% information and builds the first part of the formatted document.
 \maketitle
-\section{Applicable ``Area of Interests'' Targets}
-{\footnotesize
-\begin{enumerate}
-    \item In situ data management and infrastructures
-Current Systems: production quality, research prototypes , Opportunities ,Gaps
 
-Current Systems: integration of VTKm, Adios2 and Python (PyTorch). Prototype being a conditional generative adversarial network (cGAN) designed to use a VTKm based pathtracer applied but not limited to learning global illumination and light behavior in rendering tasks. 
-Opportunities: Introducing a framework allowing researchers easy access to python on HPC systems as well as machine learning aided technique to treat and study experimental data used in scientific simulations as learnable probability distributions with derived conditional dependencies of interest.
-
-   \item System resources, hardware, and emerging architectures.
-Enabling Hardware, Hardware and architectures that provide opportunities for In situ processing, such as burst buffers, staging computations on I/O nodes, sharing cores within a node for both simulation and in situ processing
-
-Enabling Hardware: By constructing an architecture allowing for Python to interface with VTKm data management controlled by Adios2 the proposed software allows for a well distributed simulation task among cores.
-
-  \item Methods and algorithms:
-Analysis: feature detection, statistical methods, temporal methods, geometric and topological methods 
-Visualization: information visualization, scientific visualization, time-varying methods
-  \item Case Studies and Data Sources
-In situ methods/systems applied to data from simulations and/or experiments / observations
-  \item Simulation and Workflows:
-Integration:data modeling, software-engineering, 
-Workflows for supporting complex in situ processing pipelines
-  \item Requirements, Usability:
-Reproducibility, provenance and metadata
-
-\end{enumerate}
-}
 
 \section{Introduction}
 
+As IO bandwidth continues to be significantly less than compute bandwidth in-situ methods have become essential. We hope to address the inverse relationship of IO and compute time by focussing on the intersection of two domains in which there is an increasing need for in-situ solutions in both applied and research communities, namely, searching scientific visualisation and machine learning applications. The purpose of this project is then to offer a solution which provides the means necessary to design machine learning implementations at scale and in-situ to aid or be the basis of visualisation and simulation tasks.
+
+In this work we demonstrate and example application of PAVE's platform by employing a neural network for real time rendering and accurate light transport simulation within the framework of Python, specifically PyTorch, made compatible for distributed systems and high performance computing (HPC). The provided model is a coalescence of VTK-m, a visualisation toolkit fit for massively threaded architectures, PyTorch, an  increasingly popular language within machine learning due to robust libraries for neural networks, and Adios2, an adaptable unified IO framework for data management at scale. The resulting work accomplishes this combination by utilising VTK-m to construct a path trace rendering tool able to fluidly and efficiently communicate to a conditional Generative Adversarial Network (cGAN) by means of Adios2 during training.   The resulting generative model serves as a real-time filter for rendering images and visual simulations accurately approximating indirect illumination and soft shadows with quality comparable to offline approaches. 
 
 \section{Related Work}
 
@@ -218,7 +198,7 @@ Real time true to life quality renderings of light transport remains an active a
 
 \section{Technique Overview}
 
-Utilisation of PAVE consists of three consecutive phases: rendering phase of conditional training images, training phase of the generative neural network, and execution phase of the trained network. Three core components, VTK-m, PyTorch, and Adios2 fufill a unique functional requirement during each stage. In this section we describe the independent design and global role each system plays.
+Utilisation of PAVE consists of three consecutive phases: rendering phase of conditional training images, training phase of the generative neural network, and execution phase of the trained network. Three core components, VTK-m, PyTorch, and Adios2 each fulfil a unique functional requirement during the separate stages. In this section we describe the independent design and global role each system plays.
 
 \subsection{System Overview}
  
@@ -244,14 +224,44 @@ As input during training the discriminator network is given the set of condition
 
 
 \subsection{Core Design Pattern}
+ 
+PAVE offers a means of in-situ communication between visualisations or simulations requiring an artificial intelligence component. The resulting solution consists of two core components, simulation and learning. Pave then allows each task to communicate results among each other fluidly. The scientific simulation or visualisation task developed by the user can then provide resulting visualisations to a separately developed learning model as input or employ a learning model within the visualisation task.  
 
-For our PyTorch in situ proposal the current systems we employ are VTK-m, for rendering path traced images and conditional geometry buffers focus, and Adios2 for data management. We discuss the design pattern for our in situ visualisation task with support from deep learning in the order of operations followed within the pipeline of use. Namely, we present the design pattern for rendering light transport in VTK-m coupled with data transport to PyTorch (\ref{pathtracer}). Subsequently we explain the infrastructure for embedding VTK-m throughput managed by Adios2 within PyTorch and demonstrate through example (\ref{pytorch}) by  instantiating a PyTorch data interface allowing for data parallelization and multi-GPU/distributed training as used within the framework for training our cGAN model. 
+\subsubsection{User Provided Simulation or Visualisation}
 
-\subsubsection{VTK-m Data Generation and Adios2 Data Transport}\label{pathtracer}
+For our in-situ and scalable solution the scientific simulation task designed by the user can produce results to be passed to a learning model or save the simulation data to be retrieved later by the learning model. With IO managed by Adios2 the user simulation can remain fully scalable to distributed systems. For this same reason in the provided example in section \ref{ex} we chose VTK-m arrays as the data structures of the visualisation task.
+ 
+\noindent\rule{0.5\textwidth}{1pt}
+\inputminted{python}{pave_pt.py}\label{PAVEvis}
+%\inputminted{python}{adiosdataloader.py}
+\noindent\rule{0.5\textwidth}{1pt}
+
+The code example  demonstrates the visualisation component in our solution. The user is able to open or generate visualisation data to be saved or sent to other processes. 
+
+\subsubsection{User Defined Machine Learning Application}
+
+PAVE allows researchers or practitioners to implement their learning algorithms in the increasingly popular language Python due to having a robust library for learning tasks and notably neural networks. 
+
+\noindent\rule{0.5\textwidth}{1pt}\label{PAVElearn}
+\inputminted{python}{pave.py}
+%\inputminted{python}{adiosdataloader.py}
+\noindent\rule{0.5\textwidth}{1pt}
+
+Above we demonstrate employing PAVE while training a PyTorch model. The training method for Model is able to request visualisation samples used during training based on some parameter used in the visualisation task or retrieve precomputed visualisation data by calling PAVE.
+ 
+\subsubsection{Communication of Visualisation Data and Learning}
+
+As demonstrated in section \ref{PAVEvis} PAVE allows for the user to save or pass data produced by the simulation and similarly the user would also be able to request results from the learning model depending on the application. Section \ref{PAVElearn}
+
+\subsection{Our Provided Example of PAVE}\label{ex}
+
+For our PyTorch in situ proposal the current systems we employ are VTK-m, for rendering path traced images and conditional geometry buffers focus, and Adios2 for data management. We discuss the design pattern for our in situ visualisation task with support from deep learning in the order of operations followed within the pipeline of use. Namely, we present the design pattern for rendering light transport in VTK-m coupled with data transport to PyTorch (\ref{pathtracer}). Subsequently we explain the infrastructure for embedding VTK-m throughput managed by Adios2 within PyTorch and demonstrate through example (\ref{pytorch}) by  instantiating a PyTorch data interface allowing for data parallelization and multi-GPU/distributed training as used within the framework for training our cGAN model.
+
+\subsubsection{VTK-m Light Transport Visualisation}\label{pathtracer}
 
 Path traced images are maintained within C++11 as VTK-m arrays which can be passed by reference directly to PyTorch using Adios2 APIs or written to Adios2 .bp file and retrieved during training or when utilising the neural network to generate novel scene renderings from rendered geometry buffers. 
 
-\subsubsection{PyTorch Design}\label{pytorch}
+\subsubsection{PyTorch cGAN Global Illumination Generator}\label{pytorch}
 
 For training, our solution used by the cGAN is ``{\it AdiosDataLoader}'', a data class inheriting from the abstract indexing class PyTorch {\it torch.utils.data.Dataset}. The {\it AdiosDataLoader} employs Adios2 to either retrieve from file or have passed by reference vector representations of path traced images and conditional buffers. Within VTK-m during generation these vectors represented as VTK-m vectors and within PyTorch as numpy arrays. In this manner the training or test sets needed by PyTorch and created by VTK-m are available to PyTorch in situ or with reference to written memory. If retrieving VTK-m's renderings PyTorch will compile Adios2 attributes from file as tabled by Adios2 into .bp files. VTK-m generated datasets can be retrieved with {\it read\_adios\_bp()} or passed to a similar {\it get\_adios\_bp()} and subsequently forwarded to our {\it get\_split()}  to partition the dataset into 60\% training, 20\% testing and 20\% validation subsets. The split datasets are then used to construct the {\it AdiosDataLoader} class which inherits from the {\it torch.utils.data.DataLoader} thereby providing a data sampler of our VTK-m renderings with a single-process or multi-process iterator over the dataset affording the tools necessary to train our neural networks in the canonical manner.
 
@@ -259,16 +269,14 @@ For training, our solution used by the cGAN is ``{\it AdiosDataLoader}'', a data
 %\inputminted{python}{pytorchAdiosRead.py}
 %\inputminted{python}{trainingSplit.py}
 
-\noindent\rule{0.5\textwidth}{1pt}
-\inputminted{python}{pytorchDataLoader.py}
-%\inputminted{python}{adiosdataloader.py}
-\noindent\rule{0.5\textwidth}{1pt}
+
+
 
 In the above code sample the {\it AdiosDataLoader} class is used to partition the data set into training, validation and testing as well as offer a distributable data sampler with an array-like data structure allowing index access to elements and collection size functionality.
 
-\noindent\rule{0.5\textwidth}{1pt}
-\inputminted{python}{adiosdataloader.py}
-\noindent\rule{0.5\textwidth}{1pt}
+%\noindent\rule{0.5\textwidth}{1pt}
+%\inputminted{python}{adiosdataloader.py}
+%\noindent\rule{0.5\textwidth}{1pt}
 
 \section{Cornell Box Experiment}
 
@@ -309,11 +317,7 @@ Our work offers a distributable and scalable implementation and framework to all
 %% identification of the section in the article metadata, and the
 %% consistent spelling of the heading.
 \begin{acks}
-Identification of funding sources and other support, and thanks to
-individuals and groups that assisted in the research and the
-preparation of the work should be included in an acknowledgment
-section, which is placed just before the reference section in your
-document.
+ This research was supported in part by an appointment to the Oak Ridge National Laboratory ASTRO Program, sponsored by the U.S. Department of Energy and administered by the Oak Ridge Institute for Science and Education.
 \end{acks}
 
 %%

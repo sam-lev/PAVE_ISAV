@@ -64,37 +64,9 @@ In this work we demonstrate an example application of PAVE's platform by employi
 
 
 \input{RelatedWorks.tex}
+\input{PAVE.tex}
 \input{CaseStudy1.tex}
 
-\subsection{Core Design Pattern}
- 
-PAVE offers a means of in situ communication between visualisations or simulations requiring an artificial intelligence component. The resulting solution consists of two core components, simulation and learning. Pave then allows each task to communicate results among each other fluidly. The scientific simulation or visualisation task developed by the user can then provide resulting visualisations to a separately developed learning model as input or employ a learning model within the visualisation task.  
-
-\subsubsection{User Provided Simulation or Visualisation}
-
-For our in-situ and scalable solution the scientific simulation task designed by the user can produce results to be passed to a learning model or save the simulation data to be retrieved later by the learning model. With IO managed by Adios2 the user simulation can remain fully scalable to distributed systems. For this same reason in the provided example in section \ref{ex} we chose VTK-m arrays as the data structures of the visualisation task.
-\setminted{fontsize=\footnotesize,baselinestretch=1} 
-\noindent\rule{0.5\textwidth}{1pt}
-\inputminted{cpp}{pave_pt.py}\label{PAVEvis}
-%\inputminted{python}{adiosdataloader.py}
-\noindent\rule{0.5\textwidth}{1pt}
-
-The code example  demonstrates the visualisation component in our solution. The user is able to open or generate visualisation data to be saved or sent to other processes. 
-
-\subsubsection{User Defined Machine Learning Application}
-
-PAVE allows researchers or practitioners to implement their learning algorithms in the increasingly popular language Python due to having a robust library for learning tasks and notably neural networks. 
-
-\noindent\rule{0.5\textwidth}{1pt}\label{PAVElearn}
-\inputminted{python}{pave.py}
-%\inputminted{python}{adiosdataloader.py}
-\noindent\rule{0.5\textwidth}{1pt}
-
-Above we demonstrate employing PAVE while training a PyTorch model. The training method for Model is able to request visualisation samples used during training based on some parameter used in the visualisation task or retrieve precomputed visualisation data by calling PAVE.
- 
-\subsubsection{Communication of Visualisation Data and Learning}
-
-As demonstrated in section \ref{PAVEvis} and PAVE allows for the user to save or pass data produced by the simulation and similarly the user would also be able to request results from the learning model depending on the application. Section \ref{PAVElearn} demonstrates PAVE's support in requesting data in place from the user's visualization implementation during training of a predictive model used as example. 
 
 \subsection{Our Provided Example of PAVE}\label{ex}
 

@@ -1,196 +1,65 @@
-%
-% __NOTE: (!) 
-%      to build pdf with pdflatex you 
-%      must do pdflatex --shell-escape PAVE_ISAV.tex 
-%      because of minted import for code examples
-%__
-\documentclass[sigconf,authordraft]{acmart}%
-\usepackage{minted}%for python code
-
-\usepackage{hyperref}
-
-%%
-%% \BibTeX command to typeset BibTeX logo in the docs
-\AtBeginDocument{%
-  \providecommand\BibTeX{{%
-    \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
-
-%%\setcopyright{acmcopyright}
-%%\copyrightyear{2018}
-%%\acmYear{2018}
-%%\acmDOI{10.1145/1122445.1122456}
-
-%% These commands are for a PROCEEDINGS abstract or paper.
-%%\acmConference[Woodstock '18]{Woodstock '18: ACM Symposium on Neural
-%%  Gaze Detection}{June 03--05, 2018}{Woodstock, NY}
-%%\acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
-%%  June 03--05, 2018, Woodstock, NY}
-%%\acmPrice{15.00}
-%%\acmISBN{978-1-4503-9999-9/18/06}
-
-
-%%
-%% Submission ID.
-%% Use this when submitting an article to a sponsored event. You'll
-%% receive a unique submission ID from the organizers
-%% of the event, and this ID should be used as the parameter to this command.
-%%\acmSubmissionID{123-A56-BU3}
-
-%%
-%% The majority of ACM publications use numbered citations and
-%% references.  The command \citestyle{authoryear} switches to the
-%% "author year" style.
-%%
-%% If you are preparing content for an event
-%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
-%% citations and references.
-%% Uncommenting
-%% the next command will enable that style.
-%%\citestyle{acmauthoryear}
-
-%%
-%% end of the preamble, start of the body of the document source.
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{minted}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-%%
-%% The "title" command has an optional parameter,
-%% allowing the author to define a "short title" to be used in page headers.
-\title{PAVE}
-
-%%
-%% The "author" command and its associated commands are used to define
-%% the authors and their affiliations.
-%% Of note is the shared affiliation of the first two authors, and the
-%% "authornote" and "authornotemark" commands
-%% used to denote shared contribution to the research.
-\author{Samuel Leventhal}
-\authornotemark[1]
-%\authornote{Both authors contributed equally to this research.}
-\email{samlev@cs.utah.edu}
-\affiliation{%
-  \institution{University of Utah School of Computing: Scientific Computing and Imaging Institute}
-  %\streetaddress{P.O. Box 1212}
-  %\city{Dublin}
-  %\state{Ohio}
-  %\postcode{43017-6221}
-}
-%\orcid{1234-5678-9012}
-\author{Mark Kim}
-\email{kimmb@ornl.gov}
-\affiliation{%
-  \institution{Oak Ridge National Lab}
-  %\streetaddress{P.O. Box 1212}
-  %\city{Dublin}
-  %\state{Ohio}
-  %\postcode{43017-6221}
+\title{PAVE\\
 }
 
-\author{Dave Pugmire}
-\email{pugmire@ornl.gov}
-\affiliation{%
-  \institution{Oak Ridge National Lab}}
+\author{\IEEEauthorblockN{1\textsuperscript{st} Samuel Leventhal}
+\IEEEauthorblockA{\textit{University of Utah School of Computing} \\
+\textit{Scientific Computing and Imaging Institute}\\
+Salt Lake City, UT., USA \\
+samlev@cs.utah.edu}
+\and
+\IEEEauthorblockN{2\textsuperscript{nd} Mark Kim}
+\IEEEauthorblockA{\textit{Oak Ridge National Laboratory} \\
+Oak Ridge TN., USA \\
+kimmb@ornl.gov}
+\and
+\IEEEauthorblockN{3\textsuperscript{rd} David Pugmire}
+\IEEEauthorblockA{\textit{Oak Ridge National Laboratory} \\
+Oak Ridge TN., USA \\
+pugmire@ornl.gov}
+}
 
-
-%%
-%% By default, the full list of authors will be used in the page
-%% headers. Often, this list is too long, and will overlap
-%% other information printed in the page headers. This command allows
-%% the author to define a more concise list
-%% of authors' names for this purpose.
-\renewcommand{\shortauthors}{Leventhal and Kim, et al.}
-
-%%
-%% The abstract is a short summary of the work to be presented in the
-%% article.
-\begin{abstract}
- The need for researchers and practitioners to have access to {\it in situ} operations is increasing for artificial intelligence and visualisations tasks as implementations become more complex and scaled widening the gap between computation time and IO throughput. What is more, a growing number of applications continue to be developed dealing with the combination of these two domains. With PAVE we present a solution which allows in place data management between visualisation and machine learning tasks. We then demonstrate our framework with the application of a conditional Generative Adversarial neural Network (cGAN) capable of in situ and at scale training over path traced images resulting in a generative model able to produce real-time scene renderings with accurate light transport and global illumination of a quality comparable to offline approaches. 
-\end{abstract}
-
-%%
-%% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
-%% Please copy and paste the code instead of the example below.
-%%
-
- \begin{CCSXML}
-<ccs2012>
-<concept>
-<concept_id>10003752.10003753.10003761.10003762</concept_id>
-<concept_desc>Theory of computation~Parallel computing models</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10003753.10003761.10003763</concept_id>
-<concept_desc>Theory of computation~Distributed computing models</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10010070.10010071.10010085</concept_id>
-<concept_desc>Theory of computation~Structured prediction</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10010070.10010071.10010261.10010276</concept_id>
-<concept_desc>Theory of computation~Adversarial learning</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10010070.10010111.10011710</concept_id>
-<concept_desc>Theory of computation~Data structures and algorithms for data management</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10003753.10003757</concept_id>
-<concept_desc>Theory of computation~Probabilistic computation</concept_desc>
-<concept_significance>300</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10010070.10010111.10010113</concept_id>
-<concept_desc>Theory of computation~Database query languages (principles)</concept_desc>
-<concept_significance>300</concept_significance>
-</concept>
-<concept>
-<concept_id>10010405.10010432.10010439.10010440</concept_id>
-<concept_desc>Applied computing~Computer-aided design</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-</ccs2012>
-\end{CCSXML}
-
-\ccsdesc[500]{Theory of computation~Parallel computing models}
-\ccsdesc[500]{Theory of computation~Distributed computing models}
-\ccsdesc[500]{Theory of computation~Structured prediction}
-\ccsdesc[500]{Theory of computation~Adversarial learning}
-\ccsdesc[500]{Theory of computation~Data structures and algorithms for data management}
-\ccsdesc[300]{Theory of computation~Probabilistic computation}
-\ccsdesc[300]{Theory of computation~Database query languages (principles)}
-\ccsdesc[500]{Applied computing~Computer-aided design}
-
-%%
-%% Keywords. The author(s) should pick words that accurately describe
-%% the work being presented. Separate the keywords with commas.
-\keywords{VTKm, neural networks, generative adversarial network, Adios, PyTorch, path tracing}
-
-%% A "teaser" image appears between the author and affiliation
-%% information and the body of the document, and typically spans the
-%% page.
-\begin{teaserfigure}
-  \includegraphics[width=\textwidth]{buffer_results_teaser.png}
-  \caption{\textmd{Rendered Conditional Geometry Buffers ({\bf left set}) and artificial rendering with conditional generative adversarial neural network ({\bf right couple}) comparing ground truth path traced rendering ({\bf left}) with image generated ({\bf right}).}}
-  \Description{Conditional Buffers and path traced rendered with VTKm to be used for training a PyTorch conditional generative adversarial network.}
-  \label{teaser}
-\end{teaserfigure}
-
-%%
-%% This command processes the author and affiliation and title
-%% information and builds the first part of the formatted document.
 \maketitle
 
+\begin{abstract}
+    The need for researchers and practitioners to have access to {\it in situ} operations is increasing for artificial intelligence and visualisations tasks as implementations become more complex and scaled widening the gap between computation time and IO throughput. What is more, a growing number of applications continue to be developed dealing with the combination of these two domains. With PAVE we present a solution which allows in place data management between visualisation and machine learning tasks. We then demonstrate our framework with the application of a conditional Generative Adversarial neural Network (cGAN) capable of in situ and at scale training over path traced images resulting in a generative model able to produce real-time scene renderings with accurate light transport and global illumination of a quality comparable to offline approaches. 
+    
+\end{abstract}
 
+\begin{IEEEkeywords}
+    VTKm, neural networks, generative adversarial network, in-situ, PyTorch, path tracing
+\end{IEEEkeywords}
+
+
+% \begin{teaserfigure}
+%     \includegraphics[width=\textwidth]{buffer_results_teaser.png}
+%     \caption{\textmd{Rendered Conditional Geometry Buffers ({\bf left set}) and artificial rendering with conditional generative adversarial neural network ({\bf right couple}) comparing ground truth path traced rendering ({\bf left}) with image generated ({\bf right}).}}
+%     \Description{Conditional Buffers and path traced rendered with VTKm to be used for training a PyTorch conditional generative adversarial network.}
+%     \label{teaser}
+%   \end{teaserfigure}
+  
 \section{Introduction}
-
 As IO bandwidth continues to be significantly less than compute bandwidth in-situ methods have become essential. We hope to address the inverse relationship of IO and compute time by focussing on the intersection of two domains in which there is an increasing need for in situ solutions in both applied and research communities, namely, scientific visualisation and machine learning applications. The purpose of this project is then to offer a solution which provides the means necessary to design machine learning implementations at scale and in situ to aid or be the basis of visualisation and simulation tasks. We accomplish this by providing read, write and in place data transfer functionality between learning models and visualisation task implementations. 
 
 In this work we demonstrate an example application of PAVE's platform by employing a neural network for real time rendering and accurate light transport simulation within the framework of Python, specifically PyTorch, made compatible for distributed systems and high performance computing (HPC). The provided model is a coalescence of the Visualisation Toolkit fit for Massively threaded architectures (VTK-m), Python, an increasingly popular language within the machine learning community due to robust libraries for neural networks such as PyTorch, and Adios2, an adaptable unified IO framework for data management at scale. The resulting work accomplishes this combination by utilising VTK-m to construct a path trace rendering tool able to fluidly and efficiently communicate to a cGAN by means of Adios2 during training.   The resulting generative model serves as a real-time filter for rendering images and visual simulations accurately approximating indirect illumination and soft shadows with quality comparable to offline approaches. 
+
+\begin{figure*}
+    \includegraphics[width=\linewidth]{buffer_results_teaser}
+    \caption{Rendered Conditional Geometry Buffers ({\bf left set}) and artificial rendering with conditional generative adversarial neural network ({\bf right couple}) comparing ground truth path traced rendering ({\bf left}) with image generated ({\bf right}).}
+  \end{figure*}
 
 \section{Related Work}
 
@@ -302,15 +171,15 @@ The geometry buffers serve as joint variables for the conditional probability di
 \subsection{Cornell Box Experiment Results}
 The resulting generated images show promising results for deep learning aided in situ scientific visualisation. We observe the network successfully learned to emulate light transport in a realistic fashion with offline performance {\bf EXAMPLE}. What is more, though designed in a ``one network for one scene'' setting, the generative net proved to be adaptive and able to generate accurate renderings for not only unobserved camera orientation renderings during training but also varied scenes of a similar flavor when provided the conditional geometry buffers of the novel scene. 
 %\vspace{-1.5em}
-\begin{figure}[h]
-\includegraphics[width=0.5\textwidth]{discrimloss.png}
-\end{figure}
-%\vspace{-1em}
+%\begin{figure}[h]
+%\includegraphics[width=0.5\textwidth]{discrimloss.png}
+%\end{figure}
+%%\vspace{-1em}
 
 %\vspace{-1.5em}
-\begin{figure}[h]
-\includegraphics[width=0.5\textwidth]{genloss.png}
-\end{figure}
+%\begin{figure}[h]
+%\includegraphics[width=0.5\textwidth]{genloss.png}
+%\end{figure}
 %\vspace{-1em}
 \subsection{Solution Design Assessment}
 
@@ -326,24 +195,35 @@ Our work offers a distributable and scalable implementation and framework to all
 %% (and NOT an unnumbered section). This ensures the proper
 %% identification of the section in the article metadata, and the
 %% consistent spelling of the heading.
-\begin{acks}
+\section*{Acknowledgment}
  This research was supported in part by an appointment to the Oak Ridge National Laboratory ASTRO Program, sponsored by the U.S. Department of Energy and administered by the Oak Ridge Institute for Science and Education.
-\end{acks}
 
-%%
-%% The next two lines define the bibliography style to be used, and
-%% the bibliography file.
-\bibliographystyle{ACM-Reference-Format}
+
+
+\section*{References}
+
+Please number citations consecutively within brackets \cite{b1}. The 
+sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
+number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
+the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
+
+Number footnotes separately in superscripts. Place the actual footnote at 
+the bottom of the column in which it was cited. Do not put footnotes in the 
+abstract or reference list. Use letters for table footnotes.
+
+Unless there are six authors or more give all authors' names; do not use 
+``et al.''. Papers that have not been published, even if they have been 
+submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
+that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
+Capitalize only the first word in a paper title, except for proper nouns and 
+element symbols.
+
+For papers published in translation journals, please give the English 
+citation first, followed by the original foreign-language citation \cite{b6}.
+
 \bibliography{pave_ref}
-
-%%
-%% If your work has an appendix, this is the place to put it.
-%\appendix
-%\section{Appendix}
-
-
+\vspace{12pt}
+\color{red}
+IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
 
 \end{document}
-\endinput
-%%
-%% End of file `sample-authordraft.tex'.

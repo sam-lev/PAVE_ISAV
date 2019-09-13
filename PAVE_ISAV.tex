@@ -99,7 +99,7 @@ PAVE offers a means of in situ communication between visualisations or simulatio
 \subsubsection{User Provided Simulation or Visualisation}
 
 For our in-situ and scalable solution the scientific simulation task designed by the user can produce results to be passed to a learning model or save the simulation data to be retrieved later by the learning model. With IO managed by Adios2 the user simulation can remain fully scalable to distributed systems. For this same reason in the provided example in section \ref{ex} we chose VTK-m arrays as the data structures of the visualisation task.
- 
+\setminted{fontsize=\footnotesize,baselinestretch=1} 
 \noindent\rule{0.5\textwidth}{1pt}
 \inputminted{cpp}{pave_pt.py}\label{PAVEvis}
 %\inputminted{python}{adiosdataloader.py}
@@ -221,6 +221,7 @@ element symbols.
 For papers published in translation journals, please give the English 
 citation first, followed by the original foreign-language citation \cite{b6}.
 
+\bibliographystyle{IEEEtran}
 \bibliography{pave_ref}
 \vspace{12pt}
 \color{red}

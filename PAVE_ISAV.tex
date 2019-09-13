@@ -8,6 +8,7 @@
 \usepackage{graphicx}
 \usepackage{textcomp}
 \usepackage{xcolor}
+
 \def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
     T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
@@ -62,6 +63,7 @@ In this work we demonstrate an example application of PAVE's platform by employi
   \end{figure*}
 
 \section{Related Work}
+As output sizes of simulations have grown to petabytes of data, new stratgies are required to handle the volumes of data generated. In-situ analysis and visualization frameworks have emerged to handle this deluge of data, dependent on the needs and requirements of the HPC application~\cite{Abbasi2010, Ayachit:2015:PCE:2828612.2828624,Childs:VisIt-HPV-Chapter:2012, 6846460}. Some frameworks provide a consistent API~\cite{Ayachit:2016:SGS:3018859.3018867,Larsen:2017:ASI:3144769.3144778} with triggers~\cite{Larsen:2018:FSS:3281464.3281468}. Others focus on in-situ, IO-oriented approaches~\cite{doi:10.1002/cpe.3125}, which enables new paradigms for in-situ performance~\cite{Kress:ISC19}.
 
 Real time, true to life quality renderings of light transport remains an active area of research with a number of various approaches. To preserve real-time rates, previous works have stored precomputed radiance transfers for light transport as spherical functions within a fixed scene geometry which are then adjusted for varied light and camera perspective through projections within a basis of spherical harmonics \cite{sloanPrecompRad}. Similarly, Light Propagation Volumes have been used to iteratively propagate light between consecutive grid positions to emulate single-bounce indirect illumination \cite{kaplanyanCasac}. More recently, deep neural  networks have been employed as a learned look up table for real-time rates with offline quality. With the use of convolutional neural networks Deep Shading is able to translate screen space buffers to into desired screen space effects such as indirect light, depth or motion blur. Similar to the methodology implemented in this work, Deep Illumination uses a conditional adversarial network (cGAN) to train a generative network with screen space buffers allowing for a trained network able to produce accurate global illumination with real-time rates at offline quality through a ``one network for one scene'' setting  \cite{deepillum}.
 
@@ -199,27 +201,6 @@ Our work offers a distributable and scalable implementation and framework to all
  This research was supported in part by an appointment to the Oak Ridge National Laboratory ASTRO Program, sponsored by the U.S. Department of Energy and administered by the Oak Ridge Institute for Science and Education.
 
 
-
-\section*{References}
-
-Please number citations consecutively within brackets \cite{b1}. The 
-sentence punctuation follows the bracket \cite{b2}. Refer simply to the reference 
-number, as in \cite{b3}---do not use ``Ref. \cite{b3}'' or ``reference \cite{b3}'' except at 
-the beginning of a sentence: ``Reference \cite{b3} was the first $\ldots$''
-
-Number footnotes separately in superscripts. Place the actual footnote at 
-the bottom of the column in which it was cited. Do not put footnotes in the 
-abstract or reference list. Use letters for table footnotes.
-
-Unless there are six authors or more give all authors' names; do not use 
-``et al.''. Papers that have not been published, even if they have been 
-submitted for publication, should be cited as ``unpublished'' \cite{b4}. Papers 
-that have been accepted for publication should be cited as ``in press'' \cite{b5}. 
-Capitalize only the first word in a paper title, except for proper nouns and 
-element symbols.
-
-For papers published in translation journals, please give the English 
-citation first, followed by the original foreign-language citation \cite{b6}.
 
 \bibliographystyle{IEEEtran}
 \bibliography{pave_ref}

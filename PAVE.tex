@@ -1,17 +1,18 @@
-\section{Core Design Pattern}
+\section{Coupling Scientific Visualization and Machine Learning}
  
-PAVE offers a means of in situ communication between visualisations or simulations requiring an artificial intelligence component. The resulting solution consists of two core components, simulation and learning. Pave then allows each task to communicate results among each other fluidly. The scientific simulation or visualisation task developed by the user can then provide resulting visualisations to a separately developed learning model as input or employ a learning model within the visualisation task.  
+PAVE couples visualization and machine learning through an in-situ framework. The resulting solution consists of two core components, visualization output and learning. PAVE then allows each task to communicate results among each other seamlessly. The scientific visualisation task developed by the user can then provide resulting visualisations to a separately developed learning model as input or employ a learning model within the visualisation task.  
+    
+\subsection{User Provided Visualisation}
 
-\subsection{User Provided Simulation or Visualisation}
+The results for the scalable, in-situ scientific visualization task designed by the user, are passed to a learning model through a single interface and the visualization can remain fully scalable to distributed systems because of PAVE. For this same reason in the provided example in section \ref{ex} we chose VTK-m arrays as the data structures of the visualisation task.
 
-For our in-situ and scalable solution the scientific simulation task designed by the user can produce results to be passed to a learning model or save the simulation data to be retrieved later by the learning model. With IO managed by Adios2 the user simulation can remain fully scalable to distributed systems. For this same reason in the provided example in section \ref{ex} we chose VTK-m arrays as the data structures of the visualisation task.
 \setminted{fontsize=\footnotesize,baselinestretch=1} 
 \noindent\rule{0.5\textwidth}{1pt}
 \inputminted{cpp}{pave_pt.py}\label{PAVEvis}
 %\inputminted{python}{adiosdataloader.py}
 \noindent\rule{0.5\textwidth}{1pt}
 
-The code example  demonstrates the visualisation component in our solution. The user is able to open or generate visualisation data to be saved or sent to other processes. 
+The code example  demonstrates the visualisation component in our solution. The user is able to open or generate visualisation data to be saved or sent to other processes. A variable name is assigned to 
 
 \subsection{User Defined Machine Learning Application}
 
@@ -26,4 +27,4 @@ Above we demonstrate employing PAVE while training a PyTorch model. The training
  
 \subsection{Communication of Visualisation Data and Learning}
 
-As demonstrated in section \ref{PAVEvis} and PAVE allows for the user to save or pass data produced by the simulation and similarly the user would also be able to request results from the learning model depending on the application. Section \ref{PAVElearn} demonstrates PAVE's support in requesting data in place from the user's visualization implementation during training of a predictive model used as example. 
+As demonstrated in Section~\ref{PAVEvis} and PAVE allows for the user to save or pass data produced by the simulation and similarly the user would also be able to request results from the learning model depending on the application. Section \ref{PAVElearn} demonstrates PAVE's support in requesting data in place from the user's visualization implementation during training of a predictive model used as example. 

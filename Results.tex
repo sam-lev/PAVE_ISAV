@@ -1,0 +1,22 @@
+\section{Results}
+\subsection{Cornell Box Experiment Results}
+The resulting generated images show promising results for deep learning aided in situ scientific visualisation. We observe the network successfully learned to emulate light transport in a realistic fashion with offline performance {\bf EXAMPLE}. What is more, though designed in a ``one network for one scene'' setting, the generative net proved to be adaptive and able to generate accurate renderings for not only unobserved camera orientation renderings during training but also varied scenes of a similar flavor when provided the conditional geometry buffers of the novel scene. 
+%\vspace{-1.5em}
+%\begin{figure}[h]
+%\includegraphics[width=0.5\textwidth]{discrimloss.png}
+%\end{figure}
+%%\vspace{-1em}
+
+%\vspace{-1.5em}
+%\begin{figure}[h]
+%\includegraphics[width=0.5\textwidth]{genloss.png}
+%\end{figure}
+%\vspace{-1em}
+\subsection{Solution Design Assessment}
+
+To render 3080 256x256 images with the VTK-m path tracer utilizing 2 Nvidia RTX-2080 Ti GPUs required 12 hours. Training the cGAN on this image data set over \_\_\_ epochs on the same machine took \_\_\_ hours. Once trained the run time of applying the generative U-Net provided the conditional buffer set averages \_\_\_ seconds. 
+
+\section{Conclusions}
+
+Our work offers a distributable and scalable implementation and framework to allow researchers and practitioners to easily integrate state of the art deep learning tools afforded by the approachable PyTorch and robust visualisation resource VTK-m for in situ graphics rendering or scientific simulation for HPC systems. With the presented example application utilising cGANs for generative visualisation also offers the prospect of quickly and accurately visualise conditionally dependent data such as light path global illumination's dependence on scene geometry. Subsequently we here then also offer a framework for visualisation within C++ with the use of VTK-m as well as Python in tandem or independently. 
+

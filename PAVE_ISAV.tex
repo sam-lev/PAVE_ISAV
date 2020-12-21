@@ -1,257 +1,62 @@
-%
-% __NOTE: (!) 
-%      to build pdf with pdflatex you 
-%      must do pdflatex --shell-escape PAVE_ISAV.tex 
-%      because of minted import for code examples
-%__
-\documentclass[sigconf,authordraft]{acmart}%
-\usepackage{minted}%for python code
+\documentclass[conference]{IEEEtran}
+\IEEEoverridecommandlockouts
+% The preceding line is only needed to identify funding in the first footnote. If that is unneeded, please comment it out.
+\usepackage{minted}
+\usepackage{cite}
+\usepackage{amsmath,amssymb,amsfonts}
+\usepackage{algorithmic}
+\usepackage{graphicx}
+\usepackage{textcomp}
+\usepackage{xcolor}
 
-\usepackage{hyperref}
-
-%%
-%% \BibTeX command to typeset BibTeX logo in the docs
-\AtBeginDocument{%
-  \providecommand\BibTeX{{%
-    \normalfont B\kern-0.5em{\scshape i\kern-0.25em b}\kern-0.8em\TeX}}}
-
-%%\setcopyright{acmcopyright}
-%%\copyrightyear{2018}
-%%\acmYear{2018}
-%%\acmDOI{10.1145/1122445.1122456}
-
-%% These commands are for a PROCEEDINGS abstract or paper.
-%%\acmConference[Woodstock '18]{Woodstock '18: ACM Symposium on Neural
-%%  Gaze Detection}{June 03--05, 2018}{Woodstock, NY}
-%%\acmBooktitle{Woodstock '18: ACM Symposium on Neural Gaze Detection,
-%%  June 03--05, 2018, Woodstock, NY}
-%%\acmPrice{15.00}
-%%\acmISBN{978-1-4503-9999-9/18/06}
-
-
-%%
-%% Submission ID.
-%% Use this when submitting an article to a sponsored event. You'll
-%% receive a unique submission ID from the organizers
-%% of the event, and this ID should be used as the parameter to this command.
-%%\acmSubmissionID{123-A56-BU3}
-
-%%
-%% The majority of ACM publications use numbered citations and
-%% references.  The command \citestyle{authoryear} switches to the
-%% "author year" style.
-%%
-%% If you are preparing content for an event
-%% sponsored by ACM SIGGRAPH, you must use the "author year" style of
-%% citations and references.
-%% Uncommenting
-%% the next command will enable that style.
-%%\citestyle{acmauthoryear}
-
-%%
-%% end of the preamble, start of the body of the document source.
+\def\BibTeX{{\rm B\kern-.05em{\sc i\kern-.025em b}\kern-.08em
+    T\kern-.1667em\lower.7ex\hbox{E}\kern-.125emX}}
 \begin{document}
 
-%%
-%% The "title" command has an optional parameter,
-%% allowing the author to define a "short title" to be used in page headers.
-\title{PAVE}
-
-%%
-%% The "author" command and its associated commands are used to define
-%% the authors and their affiliations.
-%% Of note is the shared affiliation of the first two authors, and the
-%% "authornote" and "authornotemark" commands
-%% used to denote shared contribution to the research.
-\author{Samuel Leventhal}
-\authornotemark[1]
-%\authornote{Both authors contributed equally to this research.}
-\email{samlev@cs.utah.edu}
-\affiliation{%
-  \institution{University of Utah School of Computing: Scientific Computing and Imaging Institute}
-  %\streetaddress{P.O. Box 1212}
-  %\city{Dublin}
-  %\state{Ohio}
-  %\postcode{43017-6221}
-}
-%\orcid{1234-5678-9012}
-\author{Mark Kim}
-\email{kimmb@ornl.gov}
-\affiliation{%
-  \institution{Oak Ridge National Lab}
-  %\streetaddress{P.O. Box 1212}
-  %\city{Dublin}
-  %\state{Ohio}
-  %\postcode{43017-6221}
+\title{PAVE: An In Situ Framework for Scientific Visualization and Machine Learning Coupling\\
 }
 
-\author{Dave Pugmire}
-\email{pugmire@ornl.gov}
-\affiliation{%
-  \institution{Oak Ridge National Lab}}
+\author{\IEEEauthorblockN{1\textsuperscript{st} Samuel Leventhal}
+\IEEEauthorblockA{\textit{University of Utah School of Computing} \\
+\textit{Scientific Computing and Imaging Institute}\\
+Salt Lake City, UT., USA \\
+samlev@cs.utah.edu}
+\and
+\IEEEauthorblockN{2\textsuperscript{nd} Mark Kim}
+\IEEEauthorblockA{\textit{Oak Ridge National Laboratory} \\
+Oak Ridge TN., USA \\
+kimmb@ornl.gov}
+\and
+\IEEEauthorblockN{3\textsuperscript{rd} David Pugmire}
+\IEEEauthorblockA{\textit{Oak Ridge National Laboratory} \\
+Oak Ridge TN., USA \\
+pugmire@ornl.gov}
+}
 
-
-%%
-%% By default, the full list of authors will be used in the page
-%% headers. Often, this list is too long, and will overlap
-%% other information printed in the page headers. This command allows
-%% the author to define a more concise list
-%% of authors' names for this purpose.
-\renewcommand{\shortauthors}{Leventhal and Kim, et al.}
-
-%%
-%% The abstract is a short summary of the work to be presented in the
-%% article.
-\begin{abstract}
- The need for researchers and practitioners to have access to {\it in situ} operations is increasing for artificial intelligence and visualisations tasks as implementations become more complex and scaled widening the gap between computation time and IO throughput. What is more, a growing number of applications continue to be developed dealing with the combination of these two domains. With PAVE we present a solution which allows in place data management between visualisation and machine learning tasks. We then demonstrate our framework with the application of a conditional Generative Adversarial neural Network (cGAN) capable of in situ and at scale training over path traced images resulting in a generative model able to produce real-time scene renderings with accurate light transport and global illumination of a quality comparable to offline approaches. 
-\end{abstract}
-
-%%
-%% The code below is generated by the tool at http://dl.acm.org/ccs.cfm.
-%% Please copy and paste the code instead of the example below.
-%%
-
- \begin{CCSXML}
-<ccs2012>
-<concept>
-<concept_id>10003752.10003753.10003761.10003762</concept_id>
-<concept_desc>Theory of computation~Parallel computing models</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10003753.10003761.10003763</concept_id>
-<concept_desc>Theory of computation~Distributed computing models</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10010070.10010071.10010085</concept_id>
-<concept_desc>Theory of computation~Structured prediction</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10010070.10010071.10010261.10010276</concept_id>
-<concept_desc>Theory of computation~Adversarial learning</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10010070.10010111.10011710</concept_id>
-<concept_desc>Theory of computation~Data structures and algorithms for data management</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10003753.10003757</concept_id>
-<concept_desc>Theory of computation~Probabilistic computation</concept_desc>
-<concept_significance>300</concept_significance>
-</concept>
-<concept>
-<concept_id>10003752.10010070.10010111.10010113</concept_id>
-<concept_desc>Theory of computation~Database query languages (principles)</concept_desc>
-<concept_significance>300</concept_significance>
-</concept>
-<concept>
-<concept_id>10010405.10010432.10010439.10010440</concept_id>
-<concept_desc>Applied computing~Computer-aided design</concept_desc>
-<concept_significance>500</concept_significance>
-</concept>
-</ccs2012>
-\end{CCSXML}
-
-\ccsdesc[500]{Theory of computation~Parallel computing models}
-\ccsdesc[500]{Theory of computation~Distributed computing models}
-\ccsdesc[500]{Theory of computation~Structured prediction}
-\ccsdesc[500]{Theory of computation~Adversarial learning}
-\ccsdesc[500]{Theory of computation~Data structures and algorithms for data management}
-\ccsdesc[300]{Theory of computation~Probabilistic computation}
-\ccsdesc[300]{Theory of computation~Database query languages (principles)}
-\ccsdesc[500]{Applied computing~Computer-aided design}
-
-%%
-%% Keywords. The author(s) should pick words that accurately describe
-%% the work being presented. Separate the keywords with commas.
-\keywords{VTKm, neural networks, generative adversarial network, Adios, PyTorch, path tracing}
-
-%% A "teaser" image appears between the author and affiliation
-%% information and the body of the document, and typically spans the
-%% page.
-\begin{teaserfigure}
-  \includegraphics[width=\textwidth]{buffer_results_teaser.png}
-  \caption{\textmd{Rendered Conditional Geometry Buffers ({\bf left set}) and artificial rendering with conditional generative adversarial neural network ({\bf right couple}) comparing ground truth path traced rendering ({\bf left}) with image generated ({\bf right}).}}
-  \Description{Conditional Buffers and path traced rendered with VTKm to be used for training a PyTorch conditional generative adversarial network.}
-  \label{teaser}
-\end{teaserfigure}
-
-%%
-%% This command processes the author and affiliation and title
-%% information and builds the first part of the formatted document.
 \maketitle
 
+\begin{abstract}
+    The need for researchers and practitioners to have access to {\it in situ} operations is increasing for artificial intelligence and visualisations tasks as implementations become more complex and scaled widening the gap between computation time and IO throughput. What is more, a growing number of applications continue to be developed dealing with the combination of these two domains. With PAVE we present a solution which allows in place data management between visualisation and machine learning tasks. We then demonstrate our framework with the application of a conditional Generative Adversarial neural Network (cGAN) capable of in situ and at scale training over path traced images resulting in a generative model able to produce real-time scene renderings with accurate light transport and global illumination of a quality comparable to offline approaches. 
+    
+\end{abstract}
 
-\section{Introduction}
-
-As IO bandwidth continues to be significantly less than compute bandwidth in-situ methods have become essential. We hope to address the inverse relationship of IO and compute time by focussing on the intersection of two domains in which there is an increasing need for in situ solutions in both applied and research communities, namely, scientific visualisation and machine learning applications. The purpose of this project is then to offer a solution which provides the means necessary to design machine learning implementations at scale and in situ to aid or be the basis of visualisation and simulation tasks. We accomplish this by providing read, write and in place data transfer functionality between learning models and visualisation task implementations. 
-
-In this work we demonstrate an example application of PAVE's platform by employing a neural network for real time rendering and accurate light transport simulation within the framework of Python, specifically PyTorch, made compatible for distributed systems and high performance computing (HPC). The provided model is a coalescence of the Visualisation Toolkit fit for Massively threaded architectures (VTK-m), Python, an increasingly popular language within the machine learning community due to robust libraries for neural networks such as PyTorch, and Adios2, an adaptable unified IO framework for data management at scale. The resulting work accomplishes this combination by utilising VTK-m to construct a path trace rendering tool able to fluidly and efficiently communicate to a cGAN by means of Adios2 during training.   The resulting generative model serves as a real-time filter for rendering images and visual simulations accurately approximating indirect illumination and soft shadows with quality comparable to offline approaches. 
-
-\section{Related Work}
-
-Real time, true to life quality renderings of light transport remains an active area of research with a number of various approaches. To preserve real-time rates, previous works have stored precomputed radiance transfers for light transport as spherical functions within a fixed scene geometry which are then adjusted for varied light and camera perspective through projections within a basis of spherical harmonics \cite{sloanPrecompRad}. Similarly, Light Propagation Volumes have been used to iteratively propagate light between consecutive grid positions to emulate single-bounce indirect illumination \cite{kaplanyanCasac}. More recently, deep neural  networks have been employed as a learned look up table for real-time rates with offline quality. With the use of convolutional neural networks Deep Shading is able to translate screen space buffers to into desired screen space effects such as indirect light, depth or motion blur. Similar to the methodology implemented in this work, Deep Illumination uses a conditional adversarial network (cGAN) to train a generative network with screen space buffers allowing for a trained network able to produce accurate global illumination with real-time rates at offline quality through a ``one network for one scene'' setting  \cite{deepillum}.
-
-\section{Technique Overview}
-
-Utilisation of PAVE consists of three consecutive phases: rendering phase of conditional training images, training phase of the generative neural network, and execution phase of the trained network. Three core components, VTK-m, PyTorch, and Adios2 each fulfil a unique functional requirement during the separate stages. In this section we describe the independent design and global role each system plays.
-
-\subsection{System Overview}
- 
-To achieve our goal of a conditional generative neural network capable of rendering geometric dependent object path simulations we begin by rendering informative conditional image buffers along with ground truth scene renderings. For this purpose the VTK-m was chosen due to its scalability and robust capability for HPC visualisation tasks. Provided the training set of conditional and ground truth images two neural networks, one convolutional and one generative, play a zero-sum game common to training GANs. To segue data management of training images the path tracer saves the training set in a distributed setting with the use of Adios2. During training PyTorch is then able to retrieve needed image data through the use of the adaptable IO provided by Adios's Python high-level APIs.
-
-\subsection{Path Tracer Design}
-
-Conditional image attributes and high quality ground truth rendered images are required for the training stage. For this reason the first stage of PAVE consists of generating a visual scene or simulation with VTK-m. Within the framework of VTK-m the implemented ray tracer renders images through means common to commercial ray tracers such as Monte Carlo sampling through probability distribution functions over shapes of interest and light intensity and pixel values with cumulative distribution function sampling, light scattering, randomly directed light paths and material sampling. The image buffers needed to compute light paths afford an informative conditional dependency on the behavior of lighting based on the geometry and light sources within a scene. These conditional buffers, namely albedo, direct lighting, normals of surfaces and depth with respect to point of view are then stored or passed to PyTorch with Adios2 APIs for C++ allowing for a a pipeline which preserves the solutions scalability. 
-
-\subsection{Neural Network Design}
-
-The cGAN used closely follows that introduced by Thomas and Forbes with Deep Illumination \cite{deepillum}. Both the discriminator and generator network are deep convolutional neural networks implemented in PyTorch using training data retrieved from Adios files formatted and stored by the VTK-m path tracer. The training stage relies on four conditional buffers depth, albedo, normals and direct lighting along with an associated ground truth image of high light sample count and ray depth. Given the four conditional buffers the generator attempts to construct the ground truth image from noise. The discriminator is then fed both the generated and ground truth image. The loss used for the gradient back propagation update of both networks is based on the quality of the discriminators ability to classify the artificial and true image in which the generator is greater penalised when the discriminator accurately differentiates the two images, and similarly, the discriminator has a larger loss when incorrectly identifying real from fabricated images. The generator is then considered to have converged when the discriminator predicts both generated and true images with equal probability. For both discriminator and generator networks the activation functions used between layers is LeakyReLu and Sigmoid for the final layer \cite{maasLeaky}. Batch normalisation is also performed between internal layers to minimise covariant shift of weight updates and improve learning for the deeper networks used \cite{ioffeBatch}.
-
-\subsubsection{Generator Network}
-
-The generative network used is a deep convolutional network consisting of an encoder and decoder with skip connections-concatenations of equal depth layers within the encoding and decoding stages. Due to the illustrative `shape' of this design the network is denoted a U-Net as introduced by Ronneberger et. al. for medical segmentation \cite{ronnebergerUnet}. The motivation for utilising a U-Net is due to success of the skip connections in capturing geometric and spatial attributes by linking the decoded convolutional process to the encoded upconvolutional. The mapping of contracting feature segmentation onto expanding upsampling within the network allows us to also exploit nearness to object geometry within the constructed and target image through Euclidean distance. As a result, performance in terms of required training time, quality of preserved structure, and accuracy maintaining light information of generated images drastically improves with the addition of an L1 loss to the classic binary cross entropy common to training adversarial networks when updating the discriminator and generator  \cite{isolaL1}\cite{goodfellowGAN}. 
-
-\subsubsection{Discriminator Network}
-
-For discriminating between artificial and ground truth image renderings a deep convolutional patchGAN network is used motivated by the added advantage of providing a patch-wise probability of an image in question as being real or fake. The benefit of a patch-wise probability allows for higher regional accuracy within an image as well as applicable for image-to-image tasks as introduced by Isola et. al. \cite{isolaPatch}. The image classification probability is then interpreted as the average of these patch wise probabilities over an image in question. 
-
-As input during training the discriminator network is given the set of conditional space buffers along with either the visualisation generated by the cGAN generator network or the ground truth global illumination rendering produced with the VTK-m path tracer. Taking into account the conditional image buffers stacked atop an image sample an image sample under question the resulting input is a tensor of the form Width x Height x 15. The discriminator then attempts to predict with what probability the provided image stack, either fabricated by the U-Net or the VTK-m path tracer, is real. Based on the discriminators performance the loss is computed using the classic loss for training GANs along with an L1 loss. Training is complete, and the generator has converged, when the discriminator predicts images as real or fake with an equal probability, e.g. 50\% chance of accuracy. At this point the discriminator network is discarded and the resulting generator affords a real-time in situ visualisation tool able to produce accurate global illumination from conditional geometric buffers.
+\begin{IEEEkeywords}
+    VTKm, neural networks, generative adversarial network, in-situ, PyTorch, path tracing
+\end{IEEEkeywords}
 
 
-\subsection{Core Design Pattern}
- 
-PAVE offers a means of in situ communication between visualisations or simulations requiring an artificial intelligence component. The resulting solution consists of two core components, simulation and learning. Pave then allows each task to communicate results among each other fluidly. The scientific simulation or visualisation task developed by the user can then provide resulting visualisations to a separately developed learning model as input or employ a learning model within the visualisation task.  
+% \begin{teaserfigure}
+%     \includegraphics[width=\textwidth]{buffer_results_teaser.png}
+%     \caption{\textmd{Rendered Conditional Geometry Buffers ({\bf left set}) and artificial rendering with conditional generative adversarial neural network ({\bf right couple}) comparing ground truth path traced rendering ({\bf left}) with image generated ({\bf right}).}}
+%     \Description{Conditional Buffers and path traced rendered with VTKm to be used for training a PyTorch conditional generative adversarial network.}
+%     \label{teaser}
+%   \end{teaserfigure}
+\input{Intro.tex}
 
-\subsubsection{User Provided Simulation or Visualisation}
+\input{RelatedWorks.tex}
+\input{PAVE.tex}
+\input{CaseStudy1.tex}
 
-For our in-situ and scalable solution the scientific simulation task designed by the user can produce results to be passed to a learning model or save the simulation data to be retrieved later by the learning model. With IO managed by Adios2 the user simulation can remain fully scalable to distributed systems. For this same reason in the provided example in section \ref{ex} we chose VTK-m arrays as the data structures of the visualisation task.
- 
-\noindent\rule{0.5\textwidth}{1pt}
-\inputminted{cpp}{pave_pt.py}\label{PAVEvis}
-%\inputminted{python}{adiosdataloader.py}
-\noindent\rule{0.5\textwidth}{1pt}
-
-The code example  demonstrates the visualisation component in our solution. The user is able to open or generate visualisation data to be saved or sent to other processes. 
-
-\subsubsection{User Defined Machine Learning Application}
-
-PAVE allows researchers or practitioners to implement their learning algorithms in the increasingly popular language Python due to having a robust library for learning tasks and notably neural networks. 
-
-\noindent\rule{0.5\textwidth}{1pt}\label{PAVElearn}
-\inputminted{python}{pave.py}
-%\inputminted{python}{adiosdataloader.py}
-\noindent\rule{0.5\textwidth}{1pt}
-
-Above we demonstrate employing PAVE while training a PyTorch model. The training method for Model is able to request visualisation samples used during training based on some parameter used in the visualisation task or retrieve precomputed visualisation data by calling PAVE.
- 
-\subsubsection{Communication of Visualisation Data and Learning}
-
-As demonstrated in section \ref{PAVEvis} and PAVE allows for the user to save or pass data produced by the simulation and similarly the user would also be able to request results from the learning model depending on the application. Section \ref{PAVElearn} demonstrates PAVE's support in requesting data in place from the user's visualization implementation during training of a predictive model used as example. 
 
 \subsection{Our Provided Example of PAVE}\label{ex}
 
@@ -298,52 +103,21 @@ The conditional differed shading geometry buffers used are direct lighting, norm
 \fi
 The geometry buffers serve as joint variables for the conditional probability distribution which the global illumination path traced images are considered to exist. The conditional arguments in this experiment then aid the cGAN in learning behavior of light paths given the geometry of a scene in question. 
 
-\section{Results}
-\subsection{Cornell Box Experiment Results}
-The resulting generated images show promising results for deep learning aided in situ scientific visualisation. We observe the network successfully learned to emulate light transport in a realistic fashion with offline performance {\bf EXAMPLE}. What is more, though designed in a ``one network for one scene'' setting, the generative net proved to be adaptive and able to generate accurate renderings for not only unobserved camera orientation renderings during training but also varied scenes of a similar flavor when provided the conditional geometry buffers of the novel scene. 
-%\vspace{-1.5em}
-\begin{figure}[h]
-\includegraphics[width=0.5\textwidth]{discrimloss.png}
-\end{figure}
-%\vspace{-1em}
-
-%\vspace{-1.5em}
-\begin{figure}[h]
-\includegraphics[width=0.5\textwidth]{genloss.png}
-\end{figure}
-%\vspace{-1em}
-\subsection{Solution Design Assessment}
-
-To render \_\_\_ 256x256 images with VTK-m on 2 \_\_\_\_ GPUs required \_\_\_ hours. Training the cGAN on this image data set over \_\_\_ epochs on the same machine took \_\_\_ hours. Once trained the run time of applying the generative U-Net provided the conditional buffer set averages \_\_\_ seconds. 
-
-\section{Conclusions}
-
-Our work offers a distributable and scalable implementation and framework to allow researchers and practitioners to easily integrate state of the art deep learning tools afforded by the approachable PyTorch and robust visualisation resource VTK-m for in situ graphics rendering or scientific simulation for HPC systems. With the presented example application utilising cGANs for generative visualisation also offers the prospect of quickly and accurately visualise conditionally dependent data such as light path global illumination's dependence on scene geometry. Subsequently we here then also offer a framework for visualisation within C++ with the use of VTK-m as well as Python in tandem or independently. 
-
-
+\input{Results.tex}
 %%
 %% The acknowledgments section is defined using the "acks" environment
 %% (and NOT an unnumbered section). This ensures the proper
 %% identification of the section in the article metadata, and the
 %% consistent spelling of the heading.
-\begin{acks}
+\section*{Acknowledgment}
  This research was supported in part by an appointment to the Oak Ridge National Laboratory ASTRO Program, sponsored by the U.S. Department of Energy and administered by the Oak Ridge Institute for Science and Education.
-\end{acks}
 
-%%
-%% The next two lines define the bibliography style to be used, and
-%% the bibliography file.
-\bibliographystyle{ACM-Reference-Format}
+
+
+\bibliographystyle{IEEEtran}
 \bibliography{pave_ref}
-
-%%
-%% If your work has an appendix, this is the place to put it.
-%\appendix
-%\section{Appendix}
-
-
+\vspace{12pt}
+\color{red}
+IEEE conference templates contain guidance text for composing and formatting conference papers. Please ensure that all template text is removed from your conference paper prior to submission to the conference. Failure to remove the template text from your paper may result in your paper not being published.
 
 \end{document}
-\endinput
-%%
-%% End of file `sample-authordraft.tex'.

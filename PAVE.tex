@@ -1,0 +1,39 @@
+\section{Coupling Scientific Visualization and Machine Learning}
+PAVE is an in situ coupling framework based on ADIOS~\cite{doi:10.1002/cpe.3125}. The resulting framework consists of two core components, visualization output and learning. A scientific visualization application is coupled through the C++ interface, and the output is sent through PAVE to the machine learning application for processing.PAVE then allows each task to communicate results among each other seamlessly. The scientific visualisation task developed by the user can then provide resulting visualisations to a separately developed learning model as input or employ a learning model within the visualisation task.  
+
+
+
+\subsection{User Provided Visualisation}
+
+PAVE couples visualization and machine learning through an in situ framework based on ADIOS~\cite{doi:10.1002/cpe.3125}. ADIOS provide a united interface which allows, among other things, memory-to-memory transport between applications during the IO phase of a simulation, i.e. ``in transit in situ.'' With the  unified interface, applications can be coupled either memory-to-memory or through the filesystem. The results for the scalable, in-situ scientific visualization task designed by the user, are passed to a learning model through a single interface and the visualization can remain fully scalable to distributed systems because of PAVE. For this same reason in the provided example in section \ref{ex} we chose VTK-m arrays as the data structures of the visualisation task.
+
+\setminted{fontsize=\footnotesize,baselinestretch=1} 
+\begin{listing}[htb]
+\noindent\rule{0.5\textwidth}{1pt}
+\inputminted{cpp}{pave_pt.py}\label{PAVEvis}
+%\inputminted{python}{adiosdataloader.py}
+\noindent\rule{0.5\textwidth}{1pt}
+\caption{C++ Interface for PAVE}
+\label{fig:cpp_interface}
+\end{listing}
+
+The interface in Listing~\ref{fig:cpp_interface} demonstrates the visualisation component of PAVE. PAVE is initialized with a name for the dataset that will be used with the machine learning application. As each datum (image, text, etc.) is generated, it is ``saved'' to the dataset. However, PAVE will buffer the data until either an explicit ``flush'' is called, which will flush the current in-memory data to disk, or the dataset is completed. 
+
+\subsection{User Defined Machine Learning Application}
+
+PAVE allows researchers or practitioners to implement their learning algorithms in the increasingly popular language Python due to having a robust library for learning tasks and notably neural networks. 
+
+\begin{listing}[htb]
+\noindent\rule{0.5\textwidth}{1pt}\label{PAVElearn}
+\inputminted{python}{pave.py}
+%\inputminted{python}{adiosdataloader.py}
+\noindent\rule{0.5\textwidth}{1pt}
+\caption{Python Interface}
+\label{fig:python_interface}
+\end{listing}
+
+In Listing~\ref{fig:python_interface}, we demonstrate employing PAVE while training a PyTorch model. The training method for Model is able to request visualisation samples used during training based on some parameter used in the visualisation task or retrieve precomputed visualisation data by calling PAVE.
+ 
+\subsection{Communication of Visualisation Data and Learning}
+
+As demonstrated in Section~\ref{PAVEvis} and PAVE allows for the user to save or pass data produced by the simulation and similarly the user would also be able to request results from the learning model depending on the application. Section \ref{PAVElearn} demonstrates PAVE's support in requesting data in place from the user's visualization implementation during training of a predictive model used as example. 
